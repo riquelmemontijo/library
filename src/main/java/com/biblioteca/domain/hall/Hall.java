@@ -6,16 +6,16 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "hall")
+//@Entity
+//@Table(name = "hall")
 public class Hall {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(nullable = false, unique = true)
     private UUID id;
     private String alias;
-    @OneToMany(mappedBy = "hall")
+//    @OneToMany(mappedBy = "hall")
     private List<Bookcase> bookcases;
 
 }

@@ -20,7 +20,7 @@ public class Book {
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_gender"))
     private List<Gender> genders;
-    private String autor;
+    private String author;
     private Integer units;
     private Integer availableUnits;
 
