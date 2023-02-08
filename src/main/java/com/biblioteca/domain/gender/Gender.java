@@ -19,6 +19,9 @@ public class Gender {
     @ManyToMany(mappedBy = "genders")
     private List<Book> books;
 
+    public Gender() {
+    }
+
     public Gender(GenderFormDTO genterDTO) {
         this.name = genterDTO.name();
     }
