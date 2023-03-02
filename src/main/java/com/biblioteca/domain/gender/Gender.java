@@ -11,9 +11,7 @@ import java.util.UUID;
 @Table(name = "gender")
 public class Gender {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false, unique = true)
     private UUID id;
     private String name;
     @ManyToMany(mappedBy = "genders")
