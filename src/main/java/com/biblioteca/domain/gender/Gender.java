@@ -2,6 +2,7 @@ package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
+import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +19,10 @@ public class Gender {
     private List<Book> books;
 
     public Gender() {
+    }
+
+    public void update(GenderUpdateDTO genderDTO){
+        this.name = genderDTO.name();
     }
 
     public Gender(GenderFormDTO genterDTO) {

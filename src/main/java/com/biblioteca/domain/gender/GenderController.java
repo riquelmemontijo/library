@@ -2,6 +2,7 @@ package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
+import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,23 @@ public class GenderController {
     public ResponseEntity<GenderInfoDTO> getById(@PathVariable UUID id){
         return ResponseEntity.ok(new GenderInfoDTO(repository.findById(id)
                              .orElseThrow(() -> new RecordNotFound(id))));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody GenderUpdateDTO data){
+        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFound(id));
+        gender.update(data);
+        repository.save(gender);
+        return ResponseEntity.ok(new GenderInfoDTO(gender));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable UUID id){
+        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFound(id));
+        repository.delete(gender);
+        return ResponseEntity.noContent().build();
     }
 
 }
