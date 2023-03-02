@@ -2,6 +2,7 @@ package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
+import com.biblioteca.infrastructure.exception.RecordNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,8 @@ public class GenderController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<GenderInfoDTO> getById(@PathVariable UUID id){
-        return ResponseEntity.ok(new GenderInfoDTO(repository.findById(id).get()));
+        return ResponseEntity.ok(new GenderInfoDTO(repository.findById(id)
+                             .orElseThrow(() -> new RecordNotFound(id))));
     }
 
 }
