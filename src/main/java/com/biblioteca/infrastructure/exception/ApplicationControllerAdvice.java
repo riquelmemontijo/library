@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
-    @ExceptionHandler(RecordNotFound.class)
+    @ExceptionHandler(RecordNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFound(RecordNotFound ex){
+    public String handleNotFound(RecordNotFoundException ex){
         return ex.getMessage();
     }
 

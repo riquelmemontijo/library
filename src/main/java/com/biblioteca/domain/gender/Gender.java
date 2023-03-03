@@ -40,4 +40,16 @@ public class Gender {
     public List<Book> getBooks() {
         return books;
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 }

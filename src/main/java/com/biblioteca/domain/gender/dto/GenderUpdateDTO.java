@@ -1,4 +1,6 @@
 package com.biblioteca.domain.gender.dto;
 
-public record GenderUpdateDTO(String name) {
+import java.util.UUID;
+
+public record GenderUpdateDTO(UUID id, String name) {
 }

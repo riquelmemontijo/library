@@ -3,7 +3,7 @@ package com.biblioteca.domain.gender;
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
-import com.biblioteca.infrastructure.exception.RecordNotFound;
+import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +22,13 @@ public class GenderController {
     @Autowired
     private GenderRepository repository;
 
+    @Autowired
+    private GenderMapper genderMapper;
+
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody GenderFormDTO data, UriComponentsBuilder uriBuilder){
-        var gender = new Gender(data);
+        var gender = genderMapper.genderFormDTOtoGender(data);
         repository.save(gender);
         var uri = uriBuilder.path("/gender/{id}").buildAndExpand(gender.getId()).toUri();
         return ResponseEntity.created(uri).body(new GenderInfoDTO(gender));
@@ -34,28 +37,28 @@ public class GenderController {
     @GetMapping
     public ResponseEntity<Page<GenderInfoDTO>> getAll(@PageableDefault(size = 20, sort = {"id"})
                                                       Pageable pageable){
-        var page = repository.findAll(pageable).map(GenderInfoDTO::new);
+        var page = repository.findAll(pageable).map(genderMapper::genderToGenderInfoDTO);
         return ResponseEntity.ok(page);
     }
     @GetMapping("/{id}")
     public ResponseEntity<GenderInfoDTO> getById(@PathVariable UUID id){
-        return ResponseEntity.ok(new GenderInfoDTO(repository.findById(id)
-                             .orElseThrow(() -> new RecordNotFound(id))));
+        return ResponseEntity.ok(genderMapper.genderToGenderInfoDTO(repository.findById(id)
+                             .orElseThrow(() -> new RecordNotFoundException(id))));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @Transactional
-    public ResponseEntity update(@PathVariable UUID id, @RequestBody GenderUpdateDTO data){
-        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFound(id));
-        gender.update(data);
-        repository.save(gender);
+    public ResponseEntity update(@RequestBody GenderUpdateDTO data){
+        var gender = repository.findById(data.id())
+                               .map(recordFound -> genderMapper.genderUpdateDTOtoGender(data))
+                               .orElseThrow(() -> new RecordNotFoundException(data.id()));
         return ResponseEntity.ok(new GenderInfoDTO(gender));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable UUID id){
-        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFound(id));
+        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         repository.delete(gender);
         return ResponseEntity.noContent().build();
     }
