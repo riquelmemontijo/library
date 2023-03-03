@@ -25,25 +25,25 @@ public class GenderController {
     @Autowired
     private GenderMapper genderMapper;
 
+    @Autowired
+    private GenderService genderService;
+
     @PostMapping
-    @Transactional
     public ResponseEntity create(@RequestBody GenderFormDTO data, UriComponentsBuilder uriBuilder){
-        var gender = genderMapper.genderFormDTOtoGender(data);
-        repository.save(gender);
-        var uri = uriBuilder.path("/gender/{id}").buildAndExpand(gender.getId()).toUri();
-        return ResponseEntity.created(uri).body(new GenderInfoDTO(gender));
+        var gender = genderService.create(data);
+        var uri = uriBuilder.path("/gender/{id}")
+                            .buildAndExpand(gender.id())
+                            .toUri();
+        return ResponseEntity.created(uri).body(gender);
     }
 
     @GetMapping
-    public ResponseEntity<Page<GenderInfoDTO>> getAll(@PageableDefault(size = 20, sort = {"id"})
-                                                      Pageable pageable){
-        var page = repository.findAll(pageable).map(genderMapper::genderToGenderInfoDTO);
-        return ResponseEntity.ok(page);
+    public ResponseEntity<Page<GenderInfoDTO>> getAll(@PageableDefault(size = 20, sort = {"id"}) Pageable pageable){
+        return ResponseEntity.ok(genderService.getAll(pageable));
     }
     @GetMapping("/{id}")
     public ResponseEntity<GenderInfoDTO> getById(@PathVariable UUID id){
-        return ResponseEntity.ok(genderMapper.genderToGenderInfoDTO(repository.findById(id)
-                             .orElseThrow(() -> new RecordNotFoundException(id))));
+        return ResponseEntity.ok(genderService.getById(id));
     }
 
     @PutMapping
@@ -52,7 +52,7 @@ public class GenderController {
         var gender = repository.findById(data.id())
                                .map(recordFound -> genderMapper.genderUpdateDTOtoGender(data))
                                .orElseThrow(() -> new RecordNotFoundException(data.id()));
-        return ResponseEntity.ok(new GenderInfoDTO(gender));
+        return ResponseEntity.ok(genderMapper.genderToGenderInfoDTO(gender));
     }
 
     @DeleteMapping("/{id}")

@@ -18,8 +18,8 @@ import javax.transaction.Transactional;
 @RequestMapping("/book")
 public class BookController {
 
-    @Autowired
-    private BookRepository repository;
+//    @Autowired
+//    private BookRepository repository;
 
 //    @PostMapping
 //    @Transactional

@@ -24,4 +24,6 @@ public class Book {
     private Integer units;
     private Integer availableUnits;
 
+    public Book() {
+    }
 }
