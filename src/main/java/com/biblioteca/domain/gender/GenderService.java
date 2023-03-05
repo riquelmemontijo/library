@@ -41,14 +41,17 @@ public class GenderService {
     @Transactional
     public GenderInfoDTO update(GenderUpdateDTO genderUpdateDTO){
 
-        return repository.findById(genderUpdateDTO.id())
-                         .map(recordFound -> {
-                            return genderMapper.genderToGenderInfoDTO(
-                                    repository.save(Gender.builder()
-                                                          .id(genderUpdateDTO.id())
-                                                          .name(genderUpdateDTO.name())
-                                                          .build()));
-                         }).orElseThrow(() -> new RecordNotFoundException(genderUpdateDTO.id()));
+        var gender = repository.findById(genderUpdateDTO.id())
+                               .orElseThrow(() -> new RecordNotFoundException(genderUpdateDTO.id()));
+
+        gender.update(genderUpdateDTO);
+
+        return genderMapper.genderToGenderInfoDTO(gender);
+    }
+
+    public void delete(UUID id){
+        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+        repository.delete(gender);
     }
 
 }

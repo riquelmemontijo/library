@@ -3,7 +3,6 @@ package com.biblioteca.domain.gender;
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
-import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,18 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/gender")
 public class GenderController {
-
-    @Autowired
-    private GenderRepository repository;
-
-    @Autowired
-    private GenderMapper genderMapper;
 
     @Autowired
     private GenderService genderService;
@@ -41,25 +33,20 @@ public class GenderController {
     public ResponseEntity<Page<GenderInfoDTO>> getAll(@PageableDefault(size = 20, sort = {"id"}) Pageable pageable){
         return ResponseEntity.ok(genderService.getAll(pageable));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<GenderInfoDTO> getById(@PathVariable UUID id){
         return ResponseEntity.ok(genderService.getById(id));
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity update(@RequestBody GenderUpdateDTO data){
-        var gender = repository.findById(data.id())
-                               .map(recordFound -> genderMapper.genderUpdateDTOtoGender(data))
-                               .orElseThrow(() -> new RecordNotFoundException(data.id()));
-        return ResponseEntity.ok(genderMapper.genderToGenderInfoDTO(gender));
+        return ResponseEntity.ok(genderService.update(data));
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity delete(@PathVariable UUID id){
-        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
-        repository.delete(gender);
+        genderService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

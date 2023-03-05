@@ -1,15 +1,12 @@
 package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.book.Book;
-import lombok.Builder;
-import lombok.Data;
+import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@Builder
 @Entity
 @Table(name = "gender")
 public class Gender {
@@ -51,5 +48,9 @@ public class Gender {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public void update(GenderUpdateDTO dto){
+        this.name = dto.name();
     }
 }
