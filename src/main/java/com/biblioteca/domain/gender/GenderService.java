@@ -17,31 +17,31 @@ import java.util.UUID;
 public class GenderService {
 
     @Autowired
-    private GenderRepository repository;
+    private GenderRepository genderRepository;
 
     @Autowired
     private GenderMapper genderMapper;
     public GenderInfoDTO getById(UUID id){
-        return repository.findById(id)
+        return genderRepository.findById(id)
                          .map(genderMapper::genderToGenderInfoDTO)
                          .orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public Page<GenderInfoDTO> getAll(Pageable pageable){
-        return repository.findAll(pageable)
+        return genderRepository.findAll(pageable)
                          .map(genderMapper::genderToGenderInfoDTO);
     }
 
     @Transactional
     public GenderInfoDTO create(GenderFormDTO data){
-        var gender = repository.save(genderMapper.genderFormDTOtoGender(data));
+        var gender = genderRepository.save(genderMapper.genderFormDTOtoGender(data));
         return genderMapper.genderToGenderInfoDTO(gender);
     }
 
     @Transactional
     public GenderInfoDTO update(GenderUpdateDTO genderUpdateDTO){
 
-        var gender = repository.findById(genderUpdateDTO.id())
+        var gender = genderRepository.findById(genderUpdateDTO.id())
                                .orElseThrow(() -> new RecordNotFoundException(genderUpdateDTO.id()));
 
         gender.update(genderUpdateDTO);
@@ -50,8 +50,8 @@ public class GenderService {
     }
 
     public void delete(UUID id){
-        var gender = repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
-        repository.delete(gender);
+        var gender = genderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+        genderRepository.delete(gender);
     }
 
 }
