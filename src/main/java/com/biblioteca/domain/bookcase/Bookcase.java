@@ -4,16 +4,14 @@ import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.bookcase.dto.BookcaseUpdateDTO;
 import com.biblioteca.domain.hall.Hall;
 import com.biblioteca.domain.hall.HallMapper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Bookcase")
 @Table(name = "bookcase")
 public class Bookcase {
 

@@ -6,7 +6,6 @@ import com.biblioteca.domain.gender.Gender;
 import com.biblioteca.domain.gender.GenderMapper;
 import com.biblioteca.domain.gender.GenderMapperImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Book")
 @Table(name = "book")
 @Component
 public class Book {

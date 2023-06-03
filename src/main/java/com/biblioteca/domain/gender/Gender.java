@@ -2,14 +2,12 @@ package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Gender")
 @Table(name = "gender")
 public class Gender {
 
