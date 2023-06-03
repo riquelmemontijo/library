@@ -2,6 +2,8 @@ package com.biblioteca.domain.gender;
 
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,7 +13,8 @@ import java.util.UUID;
 @Table(name = "gender")
 public class Gender {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(nullable = false, unique = true)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, unique = true)
     private UUID id;
     private String name;
     @ManyToMany(mappedBy = "genders")

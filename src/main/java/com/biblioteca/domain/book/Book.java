@@ -1,10 +1,14 @@
 package com.biblioteca.domain.book;
 
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
+import com.biblioteca.domain.bookcase.Bookcase;
 import com.biblioteca.domain.gender.Gender;
 import com.biblioteca.domain.gender.GenderMapper;
+import com.biblioteca.domain.gender.GenderMapperImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +16,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "book")
+@Component
 public class Book {
 
     @Id
@@ -24,12 +29,17 @@ public class Book {
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_gender"))
     private List<Gender> genders;
+    @ManyToMany
+    @JoinTable(name = "bookcase_books",
+               joinColumns = @JoinColumn(name = "id_book"),
+               inverseJoinColumns = @JoinColumn(name = "id_bookcase"))
+    private List<Bookcase> bookcases;
     private String author;
     private Integer units;
     private Integer availableUnits;
 
-    @Autowired
     @JsonIgnore
+    @Autowired
     @Transient
     private GenderMapper genderMapper;
 
@@ -98,6 +108,14 @@ public class Book {
         this.availableUnits = availableUnits;
     }
 
+    public List<Bookcase> getBookcases() {
+        return bookcases;
+    }
+
+    public void setBookcases(List<Bookcase> bookcases) {
+        this.bookcases = bookcases;
+    }
+
     public GenderMapper getGenderMapper() {
         return genderMapper;
     }
@@ -107,6 +125,8 @@ public class Book {
     }
 
     public void update(BookUpdateDTO bookUpdateDTO){
+
+        this.genderMapper = new GenderMapperImpl();
 
         this.title = bookUpdateDTO.title();
         this.genders = bookUpdateDTO.genders()
