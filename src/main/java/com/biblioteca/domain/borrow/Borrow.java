@@ -1,8 +1,12 @@
 package com.biblioteca.domain.borrow;
 
 import com.biblioteca.domain.book.Book;
+import com.biblioteca.domain.book.BookMapper;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.domain.student.Student;
+import com.biblioteca.domain.student.StudentMapper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -30,6 +34,15 @@ public class Borrow {
     private LocalDateTime dueDate;
     private BigDecimal penalty;
 
+    @JsonIgnore
+    @Autowired
+    @Transient
+    private StudentMapper studentMapper;
+
+    @JsonIgnore
+    @Autowired
+    @Transient
+    private BookMapper bookMapper;
     public Borrow() {
     }
 
@@ -97,7 +110,13 @@ public class Borrow {
 
     public void update(BorrowUpdateDTO dto){
         if(dto.student() != null){
-            this.student = dto.student();
+            this.student = studentMapper.studentInBorrowDTOtoStudent(dto.student());
+        }
+        if(!dto.books().isEmpty()){
+            this.books = dto.books().stream().map(bookMapper::bookInBorrowDTOtoBook).toList();
+        }
+        if(dto.borrowDate() != null) {
+            this.borrowDate = dto.borrowDate();
         }
     }
 }

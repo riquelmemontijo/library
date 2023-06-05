@@ -2,6 +2,7 @@ package com.biblioteca.domain.book;
 
 import com.biblioteca.domain.book.dto.BookFormDTO;
 import com.biblioteca.domain.book.dto.BookInBookcaseDTO;
+import com.biblioteca.domain.book.dto.BookInBorrowDTO;
 import com.biblioteca.domain.book.dto.BookInfoDTO;
 import org.mapstruct.Mapper;
 
@@ -11,5 +12,5 @@ public interface BookMapper {
     BookInfoDTO bookToBookInfoDTO(Book book);
     Book bookFormDTOtoBook(BookFormDTO bookFormDTO);
     Book bookInBookcaseDTOtoBook(BookInBookcaseDTO bookInBookcaseDTO);
-
+    Book bookInBorrowDTOtoBook(BookInBorrowDTO bookInBorrowDTO);
 }
