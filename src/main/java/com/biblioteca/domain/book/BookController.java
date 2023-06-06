@@ -3,7 +3,6 @@ package com.biblioteca.domain.book;
 import com.biblioteca.domain.book.dto.BookFormDTO;
 import com.biblioteca.domain.book.dto.BookInfoDTO;
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +16,11 @@ import java.util.UUID;
 @RequestMapping("/book")
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @PostMapping
     public ResponseEntity create(@RequestBody BookFormDTO data, UriComponentsBuilder uriBuilder){

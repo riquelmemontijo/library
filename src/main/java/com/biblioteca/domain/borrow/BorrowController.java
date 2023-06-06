@@ -3,7 +3,6 @@ package com.biblioteca.domain.borrow;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +16,11 @@ import java.util.UUID;
 @RequestMapping("/borrow")
 public class BorrowController {
 
-    @Autowired
-    private BorrowService borrowService;
+    private final BorrowService borrowService;
+
+    public BorrowController(BorrowService borrowService) {
+        this.borrowService = borrowService;
+    }
 
     @PostMapping
     public ResponseEntity create(@RequestBody BorrowFormDTO data, UriComponentsBuilder uriBuilder){

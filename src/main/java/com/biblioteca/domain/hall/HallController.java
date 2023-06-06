@@ -3,7 +3,6 @@ package com.biblioteca.domain.hall;
 import com.biblioteca.domain.hall.dto.HallFormDTO;
 import com.biblioteca.domain.hall.dto.HallInfoDTO;
 import com.biblioteca.domain.hall.dto.HallUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +16,11 @@ import java.util.UUID;
 @RequestMapping("/hall")
 public class HallController {
 
-    @Autowired
-    private HallService hallService;
+    private final HallService hallService;
+
+    public HallController(HallService hallService) {
+        this.hallService = hallService;
+    }
 
     @PostMapping
     public ResponseEntity create(@RequestBody HallFormDTO data, UriComponentsBuilder uriBuilder){

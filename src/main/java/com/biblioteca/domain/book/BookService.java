@@ -4,7 +4,6 @@ import com.biblioteca.domain.book.dto.BookFormDTO;
 import com.biblioteca.domain.book.dto.BookInfoDTO;
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,13 @@ import java.util.UUID;
 @Service
 public class BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
-    @Autowired
-    private BookMapper bookMapper;
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
+        this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
+    }
 
     public BookInfoDTO getById(UUID id){
         return bookRepository.findById(id)

@@ -4,7 +4,6 @@ import com.biblioteca.domain.bookcase.dto.BookcaseFormDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInfoDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,14 @@ import java.util.UUID;
 @Service
 public class BookcaseService {
 
-    @Autowired
-    private BookcaseRepository bookcaseRepository;
+    private final BookcaseRepository bookcaseRepository;
+    private final BookcaseMapper bookcaseMapper;
 
-    @Autowired
-    private BookcaseMapper bookcaseMapper;
+    public BookcaseService(BookcaseRepository bookcaseRepository, BookcaseMapper bookcaseMapper) {
+        this.bookcaseRepository = bookcaseRepository;
+        this.bookcaseMapper = bookcaseMapper;
+    }
+
     public BookcaseInfoDTO getById(UUID id){
         return bookcaseRepository.findById(id)
                 .map(bookcaseMapper::bookcaseToBookcaseInfoDTO)

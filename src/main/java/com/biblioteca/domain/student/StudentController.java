@@ -3,7 +3,6 @@ package com.biblioteca.domain.student;
 import com.biblioteca.domain.student.dto.StudentFormDTO;
 import com.biblioteca.domain.student.dto.StudentInfoDTO;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +16,11 @@ import java.util.UUID;
 @RequestMapping("/student")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @PostMapping
     public ResponseEntity create(@RequestBody StudentFormDTO data, UriComponentsBuilder uriBuilder){

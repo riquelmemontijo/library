@@ -4,7 +4,6 @@ import com.biblioteca.domain.hall.dto.HallFormDTO;
 import com.biblioteca.domain.hall.dto.HallInfoDTO;
 import com.biblioteca.domain.hall.dto.HallUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,14 @@ import java.util.UUID;
 @Service
 public class HallService {
 
-    @Autowired
-    private HallRepository hallRepository;
+    private final HallRepository hallRepository;
+    private final HallMapper hallMapper;
 
-    @Autowired
-    private HallMapper hallMapper;
+    public HallService(HallRepository hallRepository, HallMapper hallMapper) {
+        this.hallRepository = hallRepository;
+        this.hallMapper = hallMapper;
+    }
+
     public HallInfoDTO getById(UUID id){
         return hallRepository.findById(id)
                 .map(hallMapper::hallToHallInfoDTO)

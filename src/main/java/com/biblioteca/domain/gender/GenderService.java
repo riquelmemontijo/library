@@ -4,7 +4,6 @@ import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,14 @@ import java.util.UUID;
 @Service
 public class GenderService {
 
-    @Autowired
-    private GenderRepository genderRepository;
+    private final GenderRepository genderRepository;
+    private final GenderMapper genderMapper;
 
-    @Autowired
-    private GenderMapper genderMapper;
+    public GenderService(GenderRepository genderRepository, GenderMapper genderMapper) {
+        this.genderRepository = genderRepository;
+        this.genderMapper = genderMapper;
+    }
+
     public GenderInfoDTO getById(UUID id){
         return genderRepository.findById(id)
                          .map(genderMapper::genderToGenderInfoDTO)

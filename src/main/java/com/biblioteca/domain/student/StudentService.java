@@ -4,7 +4,6 @@ import com.biblioteca.domain.student.dto.StudentFormDTO;
 import com.biblioteca.domain.student.dto.StudentInfoDTO;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,14 @@ import java.util.UUID;
 @Service
 public class StudentService {
 
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    @Autowired
-    private StudentMapper studentMapper;
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
+    }
+
     public StudentInfoDTO getById(UUID id){
         return studentRepository.findById(id)
                 .map(studentMapper::studentToStudentInfoDTO)

@@ -4,7 +4,6 @@ import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,14 @@ import java.util.UUID;
 @Service
 public class BorrowService {
 
-    @Autowired
-    private BorrowRepository borrowRepository;
+    private final BorrowRepository borrowRepository;
+    private final BorrowMapper borrowMapper;
 
-    @Autowired
-    private BorrowMapper borrowMapper;
+    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper) {
+        this.borrowRepository = borrowRepository;
+        this.borrowMapper = borrowMapper;
+    }
+
     public BorrowInfoDTO getById(UUID id){
         return borrowRepository.findById(id)
                 .map(borrowMapper::borrowToBorrowInfoDTO)
