@@ -2,5 +2,5 @@ package com.biblioteca.domain.student.dto;
 
 import java.util.UUID;
 
-public record StudentInBorrowDTO(UUID id, String name, String email, String phoneNumber) {
+public record StudentInBorrowDTO(UUID id, String name) {
 }

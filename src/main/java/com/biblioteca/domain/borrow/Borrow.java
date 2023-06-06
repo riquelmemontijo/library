@@ -2,9 +2,12 @@ package com.biblioteca.domain.borrow;
 
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.book.BookMapper;
+import com.biblioteca.domain.book.BookMapperImpl;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.domain.student.Student;
 import com.biblioteca.domain.student.StudentMapper;
+import com.biblioteca.domain.student.StudentMapperImpl;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,13 +26,14 @@ public class Borrow {
     @Column(nullable = false, unique = true)
     private UUID id;
     @ManyToOne
-    @JoinColumn(name = "id_student")
+    @JoinColumn(name = "pk_student")
     private Student student;
     @ManyToMany
     @JoinTable(name = "borrow_books",
                joinColumns = @JoinColumn(name = "id_borrow"),
                inverseJoinColumns = @JoinColumn(name = "id_book"))
     private List<Book> books;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime borrowDate;
     private LocalDateTime dueDate;
     private BigDecimal penalty;
@@ -109,6 +113,8 @@ public class Borrow {
     }
 
     public void update(BorrowUpdateDTO dto){
+        this.studentMapper = new StudentMapperImpl();
+        this.bookMapper = new BookMapperImpl();
         if(dto.student() != null){
             this.student = studentMapper.studentInBorrowDTOtoStudent(dto.student());
         }
