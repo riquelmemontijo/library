@@ -16,8 +16,10 @@ public class StudentDebit {
     private BigDecimal value;
     private Boolean isPaid;
     @OneToOne
+    @JoinColumn(name = "fk_borrow")
     private Borrow borrow;
     @ManyToOne
+    @JoinColumn(name = "fk_student")
     private Student student;
 
     public StudentDebit() {

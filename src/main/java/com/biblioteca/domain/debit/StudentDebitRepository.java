@@ -1,5 +1,6 @@
 package com.biblioteca.domain.debit;
 
+import com.biblioteca.domain.student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,10 +11,10 @@ import java.util.UUID;
 @Repository
 public interface StudentDebitRepository extends JpaRepository<StudentDebit, UUID> {
     @Query("""
-               SELECT d 
-               FROM StudentDebit d 
-               WHERE d.student = :idStudent
-               AND d.isPaid = false;
+               SELECT d
+               FROM StudentDebit d
+               WHERE d.student = :student
+               AND d.isPaid = false
            """)
-    Optional<StudentDebit> findNotPaidDebitsByStudent();
+    Optional<StudentDebit> findNotPaidDebitsByStudent(Student student);
 }

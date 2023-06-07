@@ -15,4 +15,11 @@ public class ApplicationControllerAdvice {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(BusinessRulesException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBusinessRules(BusinessRulesException ex){
+        return ex.getMessage();
+    }
+
+
 }

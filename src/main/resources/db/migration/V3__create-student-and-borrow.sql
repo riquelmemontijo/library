@@ -8,7 +8,7 @@ create table if not exists student (
 
 create table if not exists borrow (
     id uuid primary key,
-    cod_borrow serial not null,
+    cod_borrow serial,
     pk_student uuid not null,
     borrow_date date not null,
     due_date date,

@@ -16,7 +16,7 @@ public class ValidateIfStudentHasDelays implements ValidateBorrow{
 
     @Override
     public void validate(Borrow borrow){
-        var hasBorrowWithDelay = borrowRepository.findBorrowWithDelayByStudent(borrow.getStudent().getId()).isPresent();
+        var hasBorrowWithDelay = borrowRepository.findBorrowWithDelayByStudent(borrow.getStudent()).isPresent();
         if(hasBorrowWithDelay){
             throw new BusinessRulesException("Student has borrows with delay");
         }
