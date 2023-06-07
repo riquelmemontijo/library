@@ -36,7 +36,7 @@ public class Borrow {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime borrowDate;
     private LocalDateTime dueDate;
-    private BigDecimal penalty;
+    private LocalDateTime returnDate;
 
     @JsonIgnore
     @Autowired
@@ -55,13 +55,13 @@ public class Borrow {
                   List<Book> books,
                   LocalDateTime borrowDate,
                   LocalDateTime dueDate,
-                  BigDecimal penalty) {
+                  LocalDateTime returnDate) {
         this.id = id;
         this.student = student;
         this.books = books;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
-        this.penalty = penalty;
+        this.returnDate = returnDate;
     }
 
     public UUID getId() {
@@ -104,12 +104,12 @@ public class Borrow {
         this.dueDate = dueDate;
     }
 
-    public BigDecimal getPenalty() {
-        return penalty;
+    public LocalDateTime getReturnDate() {
+        return returnDate;
     }
 
-    public void setPenalty(BigDecimal penalty) {
-        this.penalty = penalty;
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
     }
 
     public void update(BorrowUpdateDTO dto){

@@ -4,6 +4,7 @@ import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.domain.borrow.rules.ValidateBorrow;
+import com.biblioteca.domain.debit.StudentDebitService;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +19,13 @@ public class BorrowService {
 
     private final BorrowRepository borrowRepository;
     private final BorrowMapper borrowMapper;
+    private final StudentDebitService studentDebitService;
     private final List<ValidateBorrow> validations;
 
-    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, List<ValidateBorrow> validations) {
+    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, StudentDebitService studentDebitService, List<ValidateBorrow> validations) {
         this.borrowRepository = borrowRepository;
         this.borrowMapper = borrowMapper;
+        this.studentDebitService = studentDebitService;
         this.validations = validations;
     }
 
@@ -60,11 +63,17 @@ public class BorrowService {
         borrowRepository.delete(borrow);
     }
 
+    @Transactional
     public BorrowInfoDTO makeBorrow(BorrowFormDTO borrowFormDTO){
         var borrow = borrowMapper.borrowFormDTOtoBorrow(borrowFormDTO);
+        borrow.setDueDate(borrow.getDueDate().plusDays(7));
         validations.forEach(validation -> validation.validate(borrow));
         borrowRepository.save(borrow);
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
+
+//    public BorrowInfoDTO returnBorrow(Borrow){
+//
+//    }
     
 }

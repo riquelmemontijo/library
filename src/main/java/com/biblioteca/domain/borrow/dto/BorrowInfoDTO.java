@@ -13,5 +13,5 @@ public record BorrowInfoDTO(UUID id,
                             List<BookInBorrowDTO> books,
                             LocalDateTime borrowDate,
                             LocalDateTime dueDate,
-                            BigDecimal penalty) {
+                            ) {
 }

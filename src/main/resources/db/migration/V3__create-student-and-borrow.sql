@@ -11,8 +11,8 @@ create table if not exists borrow (
     cod_borrow serial,
     pk_student uuid not null,
     borrow_date date not null,
-    due_date date,
-    penalty float
+    due_date date not null,
+    return_date date
 );
 
 create table if not exists borrow_books (
