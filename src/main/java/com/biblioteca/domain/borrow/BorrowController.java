@@ -23,8 +23,8 @@ public class BorrowController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody BorrowFormDTO data, UriComponentsBuilder uriBuilder){
-        var borrow = borrowService.create(data);
+    public ResponseEntity makeBorrow(@RequestBody BorrowFormDTO data, UriComponentsBuilder uriBuilder){
+        var borrow = borrowService.makeBorrow(data);
         var uri = uriBuilder.path("/borrow/{id}")
                 .buildAndExpand(borrow.id())
                 .toUri();

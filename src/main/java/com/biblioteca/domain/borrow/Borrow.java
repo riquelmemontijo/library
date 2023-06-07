@@ -25,6 +25,7 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true)
     private UUID id;
+    private Long codBorrow;
     @ManyToOne
     @JoinColumn(name = "pk_student")
     private Student student;
@@ -51,12 +52,14 @@ public class Borrow {
     }
 
     public Borrow(UUID id,
+                  Long codBorrow,
                   Student student,
                   List<Book> books,
                   LocalDateTime borrowDate,
                   LocalDateTime dueDate,
                   BigDecimal penalty) {
         this.id = id;
+        this.codBorrow = codBorrow;
         this.student = student;
         this.books = books;
         this.borrowDate = borrowDate;
@@ -70,6 +73,14 @@ public class Borrow {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Long getCodBorrow() {
+        return codBorrow;
+    }
+
+    public void setCodBorrow(Long codBorrow) {
+        this.codBorrow = codBorrow;
     }
 
     public Student getStudent() {

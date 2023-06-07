@@ -3,12 +3,14 @@ package com.biblioteca.domain.borrow;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
+import com.biblioteca.domain.borrow.rules.ValidateBorrow;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,10 +18,12 @@ public class BorrowService {
 
     private final BorrowRepository borrowRepository;
     private final BorrowMapper borrowMapper;
+    private final List<ValidateBorrow> validations;
 
-    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper) {
+    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, List<ValidateBorrow> validations) {
         this.borrowRepository = borrowRepository;
         this.borrowMapper = borrowMapper;
+        this.validations = validations;
     }
 
     public BorrowInfoDTO getById(UUID id){
@@ -50,9 +54,17 @@ public class BorrowService {
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
 
+    @Transactional
     public void delete(UUID id){
         var borrow = borrowRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         borrowRepository.delete(borrow);
+    }
+
+    public BorrowInfoDTO makeBorrow(BorrowFormDTO borrowFormDTO){
+        var borrow = borrowMapper.borrowFormDTOtoBorrow(borrowFormDTO);
+        validations.forEach(validation -> validation.validate(borrow));
+        borrowRepository.save(borrow);
+        return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
     
 }
