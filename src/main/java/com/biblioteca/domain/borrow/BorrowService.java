@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,9 +73,5 @@ public class BorrowService {
         borrowRepository.save(borrow);
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
-
-//    public BorrowInfoDTO returnBorrow(Borrow){
-//
-//    }
     
 }
