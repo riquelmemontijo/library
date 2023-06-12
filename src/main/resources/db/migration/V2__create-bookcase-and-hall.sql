@@ -6,9 +6,9 @@ create table if not exists hall (
 create table if not exists bookcase (
     id uuid primary key,
     alias varchar(100) not null,
-    pk_hall uuid not null,
+    fk_hall uuid not null,
 
-    constraint pk_hall foreign key (pk_hall) references hall (id)
+    constraint fk_hall foreign key (fk_hall) references hall (id)
 );
 
 create table if not exists bookcase_books (

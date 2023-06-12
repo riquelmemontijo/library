@@ -1,5 +1,6 @@
 package com.biblioteca.domain.book.dto;
 
+import com.biblioteca.domain.author.dto.AuthorInBookDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInBookDTO;
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 
@@ -10,7 +11,7 @@ public record BookInfoDTO(UUID id,
                           String title,
                           List<GenderFormDTO> genders,
                           List<BookcaseInBookDTO> bookcases,
-                          String author,
+                          List<AuthorInBookDTO> authors,
                           Integer units,
                           Integer availableUnits) {
 }

@@ -1,5 +1,7 @@
 package com.biblioteca.domain.book;
 
+import com.biblioteca.domain.author.Author;
+import com.biblioteca.domain.author.AuthorMapper;
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
 import com.biblioteca.domain.bookcase.Bookcase;
 import com.biblioteca.domain.gender.Gender;
@@ -33,7 +35,11 @@ public class Book {
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_bookcase"))
     private List<Bookcase> bookcases;
-    private String author;
+    @ManyToMany
+    @JoinTable(name = "author_books",
+               joinColumns = @JoinColumn(name = "id_book"),
+               inverseJoinColumns = @JoinColumn(name = "id_author"))
+    private List<Author> authors;
     private Integer units;
     private Integer availableUnits;
 
@@ -42,21 +48,29 @@ public class Book {
     @Transient
     private GenderMapper genderMapper;
 
+    @JsonIgnore
+    @Autowired
+    @Transient
+    private AuthorMapper authorMapper;
     public Book() {
     }
 
     public Book(UUID id,
                 String title,
                 List<Gender> genders,
-                String author,
+                List<Bookcase> bookcases,
+                List<Author> authors,
                 Integer units,
-                Integer availableUnits) {
+                Integer availableUnits,
+                GenderMapper genderMapper) {
         this.id = id;
         this.title = title;
         this.genders = genders;
-        this.author = author;
+        this.bookcases = bookcases;
+        this.authors = authors;
         this.units = units;
         this.availableUnits = availableUnits;
+        this.genderMapper = genderMapper;
     }
 
     public UUID getId() {
@@ -83,12 +97,20 @@ public class Book {
         this.genders = genders;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<Bookcase> getBookcases() {
+        return bookcases;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setBookcases(List<Bookcase> bookcases) {
+        this.bookcases = bookcases;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public Integer getUnits() {
@@ -105,14 +127,6 @@ public class Book {
 
     public void setAvailableUnits(Integer availableUnits) {
         this.availableUnits = availableUnits;
-    }
-
-    public List<Bookcase> getBookcases() {
-        return bookcases;
-    }
-
-    public void setBookcases(List<Bookcase> bookcases) {
-        this.bookcases = bookcases;
     }
 
     public GenderMapper getGenderMapper() {
@@ -132,7 +146,10 @@ public class Book {
                                     .stream()
                                     .map(genderMapper::genderInBookDTOtoGender)
                                     .toList();
-        this.author = bookUpdateDTO.author();
+        this.authors = bookUpdateDTO.authors()
+                                    .stream()
+                                    .map(authorMapper::authorInBookDTOtoAuthor)
+                                    .toList();
     }
 
 }

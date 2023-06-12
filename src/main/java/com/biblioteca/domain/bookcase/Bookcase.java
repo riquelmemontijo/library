@@ -23,7 +23,7 @@ public class Bookcase {
     @ManyToMany(mappedBy = "bookcases")
     private List<Book> books;
     @ManyToOne
-    @JoinColumn(name = "pk_hall", nullable = false)
+    @JoinColumn(name = "fk_hall", nullable = false)
     private Hall hall;
 
     @JsonIgnore

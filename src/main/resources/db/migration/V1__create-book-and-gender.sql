@@ -6,7 +6,6 @@ create table if not exists gender(
 create table if not exists book(
     id uuid primary key,
     title varchar(100) not null,
-    author varchar(60) not null,
     units integer not null,
     available_units integer not null
 );

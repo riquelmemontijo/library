@@ -1,5 +1,6 @@
 package com.biblioteca.domain.book.dto;
 
+import com.biblioteca.domain.author.dto.AuthorInBookDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInBookDTO;
 import com.biblioteca.domain.gender.dto.GenderInBookDTO;
 
@@ -18,6 +19,7 @@ public record BookUpdateDTO(@NotNull(message = "O id é obrigatorio")
                             List<GenderInBookDTO> genders,
                             @Valid
                             List<BookcaseInBookDTO> bookcases,
-                            @NotBlank(message = "O autor é obrigatório")
-                            String author) {
+                            @Valid
+                            @NotNull(message = "O autor é obrigatório")
+                            List<AuthorInBookDTO> authors) {
 }

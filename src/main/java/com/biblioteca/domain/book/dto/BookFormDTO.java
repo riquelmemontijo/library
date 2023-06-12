@@ -1,5 +1,6 @@
 package com.biblioteca.domain.book.dto;
 
+import com.biblioteca.domain.author.dto.AuthorInBookDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInBookDTO;
 import com.biblioteca.domain.gender.dto.GenderInBookDTO;
 
@@ -16,8 +17,9 @@ public record BookFormDTO(@NotBlank(message = "O titulo é obrigatório")
                           List<GenderInBookDTO> genders,
                           @Valid
                           List<BookcaseInBookDTO> bookcases,
-                          @NotBlank(message = "O autor é obrigatório")
-                          String author,
+                          @Valid
+                          @NotNull(message = "O autor é obrigatório")
+                          List<AuthorInBookDTO> authors,
                           @PositiveOrZero(message = "A quantidade de unidades deve ser iguail ou maior que zero")
                           Integer units,
                           @PositiveOrZero(message = "As unidades disponíveis deve ser iguail ou maior que zero")
