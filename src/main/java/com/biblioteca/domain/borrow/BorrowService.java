@@ -1,7 +1,9 @@
 package com.biblioteca.domain.borrow;
 
+import com.biblioteca.domain.book.BookService;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
+import com.biblioteca.domain.borrow.dto.BorrowReturnDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.domain.borrow.rules.ValidateBorrow;
 import com.biblioteca.domain.debit.StudentDebitService;
@@ -11,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -22,12 +23,14 @@ public class BorrowService {
     private final BorrowRepository borrowRepository;
     private final BorrowMapper borrowMapper;
     private final StudentDebitService studentDebitService;
+    private final BookService bookService;
     private final List<ValidateBorrow> validations;
 
-    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, StudentDebitService studentDebitService, List<ValidateBorrow> validations) {
+    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, StudentDebitService studentDebitService, BookService bookService, List<ValidateBorrow> validations) {
         this.borrowRepository = borrowRepository;
         this.borrowMapper = borrowMapper;
         this.studentDebitService = studentDebitService;
+        this.bookService = bookService;
         this.validations = validations;
     }
 
@@ -68,10 +71,22 @@ public class BorrowService {
     @Transactional
     public BorrowInfoDTO makeBorrow(BorrowFormDTO borrowFormDTO){
         var borrow = borrowMapper.borrowFormDTOtoBorrow(borrowFormDTO);
-        borrow.setDueDate(borrow.getDueDate().plusDays(7));
+        borrow.setDueDate(borrow.getBorrowDate().plusDays(7));
         validations.forEach(validation -> validation.validate(borrow));
         borrowRepository.save(borrow);
+        bookService.decreaseStock(borrow.getBooks());
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
-    
+
+    @Transactional
+    public BorrowInfoDTO returnBorrow(BorrowReturnDTO borrowReturnDTO){
+        var borrow = borrowRepository.findById(borrowReturnDTO.id())
+                .orElseThrow(() -> new RecordNotFoundException(borrowReturnDTO.id()));
+        borrow.setReturnDate(borrowReturnDTO.returnDate());
+        bookService.addStock(borrow.getBooks());
+        if(borrow.getDueDate().isBefore(borrow.getReturnDate())){
+            studentDebitService.generateStudentDebit(borrow);
+        }
+        return borrowMapper.borrowToBorrowInfoDTO(borrow);
+    }
 }

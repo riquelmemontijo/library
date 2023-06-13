@@ -2,6 +2,7 @@ package com.biblioteca.domain.borrow;
 
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
+import com.biblioteca.domain.borrow.dto.BorrowReturnDTO;
 import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,11 @@ public class BorrowController {
                 .buildAndExpand(borrow.id())
                 .toUri();
         return ResponseEntity.created(uri).body(borrow);
+    }
+
+    @PostMapping("/return")
+    public ResponseEntity returnBorrow(@RequestBody BorrowReturnDTO data){
+        return ResponseEntity.ok(borrowService.returnBorrow(data));
     }
 
     @GetMapping

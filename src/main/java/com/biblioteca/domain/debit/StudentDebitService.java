@@ -2,7 +2,6 @@ package com.biblioteca.domain.debit;
 
 import com.biblioteca.domain.borrow.Borrow;
 import com.biblioteca.domain.debit.dto.StudentDebitInfoDTO;
-import com.biblioteca.domain.student.StudentMapper;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,23 +14,23 @@ import java.util.UUID;
 @Service
 public class StudentDebitService {
     
-    private final StudentDebitRepository repository;
-    private final StudentDebitMapper mapper;
+    private final StudentDebitRepository studentDebitRepository;
+    private final StudentDebitMapper studentDebitMapper;
 
-    public StudentDebitService(StudentDebitRepository repository, StudentDebitMapper mapper, StudentMapper studentMapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public StudentDebitService(StudentDebitRepository studentDebitRepository, StudentDebitMapper studentDebitMapper) {
+        this.studentDebitRepository = studentDebitRepository;
+        this.studentDebitMapper = studentDebitMapper;
     }
 
     public StudentDebitInfoDTO getById(UUID id){
-        return repository.findById(id)
-                .map(mapper::studentToStudentDebitInfoDTO)
+        return studentDebitRepository.findById(id)
+                .map(studentDebitMapper::studentToStudentDebitInfoDTO)
                 .orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public Page<StudentDebitInfoDTO> getAll(Pageable pageable){
-        return repository.findAll(pageable)
-                .map(mapper::studentToStudentDebitInfoDTO);
+        return studentDebitRepository.findAll(pageable)
+                .map(studentDebitMapper::studentToStudentDebitInfoDTO);
     }
 
     public void generateStudentDebit(Borrow borrow){
@@ -39,11 +38,12 @@ public class StudentDebitService {
                                       false,
                                             borrow,
                                             borrow.getStudent());
+        studentDebitRepository.save(studentDebit);
     }
 
     private BigDecimal calculateValueOfDebit(Borrow borrow) {
-        long daysOfDelay = Duration.between(borrow.getBorrowDate(), borrow.getDueDate()).toDays();
-        return BigDecimal.valueOf(daysOfDelay * 0.50);
+        long daysOfDelay = Duration.between(borrow.getDueDate(), borrow.getReturnDate()).toDays();
+        return BigDecimal.valueOf((daysOfDelay * 0.50) + 2.50);
     }
 
 }

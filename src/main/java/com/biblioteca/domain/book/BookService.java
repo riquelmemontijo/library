@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,6 +55,14 @@ public class BookService {
     public void delete(UUID id){
         var book = bookRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         bookRepository.delete(book);
+    }
+
+    public void decreaseStock(List<Book> books){
+        bookRepository.decreaseStock(books);
+    }
+
+    public void addStock(List<Book> books){
+        bookRepository.addStock(books);
     }
 
 }
