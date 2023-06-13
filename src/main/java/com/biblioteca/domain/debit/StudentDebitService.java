@@ -2,6 +2,7 @@ package com.biblioteca.domain.debit;
 
 import com.biblioteca.domain.borrow.Borrow;
 import com.biblioteca.domain.debit.dto.StudentDebitInfoDTO;
+import com.biblioteca.domain.debit.dto.StudentDebitPaidDTO;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +45,13 @@ public class StudentDebitService {
     private BigDecimal calculateValueOfDebit(Borrow borrow) {
         long daysOfDelay = Duration.between(borrow.getDueDate(), borrow.getReturnDate()).toDays();
         return BigDecimal.valueOf((daysOfDelay * 0.50) + 2.50);
+    }
+
+    public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){
+        var studentDebit = studentDebitRepository.findById(data.id())
+                 .orElseThrow(() -> new RecordNotFoundException(data.id()));
+        studentDebitRepository.paidDebit(studentDebit);
+        return studentDebitMapper.studentToStudentDebitInfoDTO(studentDebit);
     }
 
 }

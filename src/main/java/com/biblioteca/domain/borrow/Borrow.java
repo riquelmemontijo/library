@@ -1,18 +1,10 @@
 package com.biblioteca.domain.borrow;
 
 import com.biblioteca.domain.book.Book;
-import com.biblioteca.domain.book.BookMapper;
-import com.biblioteca.domain.book.BookMapperImpl;
-import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import com.biblioteca.domain.student.Student;
-import com.biblioteca.domain.student.StudentMapper;
-import com.biblioteca.domain.student.StudentMapperImpl;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -37,16 +29,8 @@ public class Borrow {
     private LocalDateTime borrowDate;
     private LocalDateTime dueDate;
     private LocalDateTime returnDate;
+    private Boolean isFinished;
 
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private StudentMapper studentMapper;
-
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private BookMapper bookMapper;
     public Borrow() {
     }
 
@@ -55,13 +39,15 @@ public class Borrow {
                   List<Book> books,
                   LocalDateTime borrowDate,
                   LocalDateTime dueDate,
-                  LocalDateTime returnDate) {
+                  LocalDateTime returnDate,
+                  Boolean isFinished) {
         this.id = id;
         this.student = student;
         this.books = books;
         this.borrowDate = borrowDate;
         this.dueDate = dueDate;
         this.returnDate = returnDate;
+        this.isFinished = isFinished;
     }
 
     public UUID getId() {
@@ -112,17 +98,11 @@ public class Borrow {
         this.returnDate = returnDate;
     }
 
-    public void update(BorrowUpdateDTO dto){
-        this.studentMapper = new StudentMapperImpl();
-        this.bookMapper = new BookMapperImpl();
-        if(dto.student() != null){
-            this.student = studentMapper.studentInBorrowDTOtoStudent(dto.student());
-        }
-        if(!dto.books().isEmpty()){
-            this.books = dto.books().stream().map(bookMapper::bookInBorrowDTOtoBook).toList();
-        }
-        if(dto.borrowDate() != null) {
-            this.borrowDate = dto.borrowDate();
-        }
+    public Boolean getFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
     }
 }

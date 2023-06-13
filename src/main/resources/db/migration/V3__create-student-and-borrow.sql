@@ -12,11 +12,11 @@ create table if not exists borrow (
     pk_student uuid not null,
     borrow_date date not null,
     due_date date not null,
-    return_date date
+    return_date date,
+    is_finished boolean
 );
 
 create table if not exists borrow_books (
-
     id_borrow uuid not null,
     id_book uuid not null,
 

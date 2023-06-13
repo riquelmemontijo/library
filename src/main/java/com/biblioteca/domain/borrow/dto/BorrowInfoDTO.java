@@ -12,5 +12,6 @@ public record BorrowInfoDTO(UUID id,
                             List<BookInBorrowDTO> books,
                             LocalDateTime borrowDate,
                             LocalDateTime dueDate,
-                            LocalDateTime returnDate) {
+                            LocalDateTime returnDate,
+                            Boolean isFinished) {
 }

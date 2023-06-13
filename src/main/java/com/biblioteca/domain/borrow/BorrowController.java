@@ -3,7 +3,6 @@ package com.biblioteca.domain.borrow;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowReturnDTO;
-import com.biblioteca.domain.borrow.dto.BorrowUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -45,11 +44,6 @@ public class BorrowController {
     @GetMapping("/{id}")
     public ResponseEntity<BorrowInfoDTO> getById(@PathVariable UUID id){
         return ResponseEntity.ok(borrowService.getById(id));
-    }
-
-    @PutMapping
-    public ResponseEntity update(@RequestBody BorrowUpdateDTO data){
-        return ResponseEntity.ok(borrowService.update(data));
     }
 
     @DeleteMapping("/{id}")
