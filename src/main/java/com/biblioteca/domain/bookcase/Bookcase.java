@@ -26,13 +26,6 @@ public class Bookcase {
     public Bookcase() {
     }
 
-    public Bookcase(UUID id, String alias, List<Book> books, Hall hall) {
-        this.id = id;
-        this.alias = alias;
-        this.books = books;
-        this.hall = hall;
-    }
-
     public UUID getId() {
         return id;
     }

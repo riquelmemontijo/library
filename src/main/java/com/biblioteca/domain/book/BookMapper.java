@@ -8,8 +8,4 @@ public interface BookMapper {
 
     BookInfoDTO bookToBookInfoDTO(Book book);
     Book bookFormDTOtoBook(BookFormDTO bookFormDTO);
-
-    Book bookUpdateDTOtoBook (BookUpdateDTO bookUpdateDTO);
-    Book bookInBookcaseDTOtoBook(BookInBookcaseDTO bookInBookcaseDTO);
-    Book bookInBorrowDTOtoBook(BookInBorrowDTO bookInBorrowDTO);
 }

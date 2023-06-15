@@ -9,5 +9,4 @@ import org.mapstruct.Mapper;
 public interface GenderMapper {
     GenderInfoDTO genderToGenderInfoDTO(Gender gender);
     Gender genderFormDTOtoGender(GenderFormDTO genderFormDTO);
-    Gender genderInBookDTOtoGender(GenderInBookDTO genderInBookDTO);
 }

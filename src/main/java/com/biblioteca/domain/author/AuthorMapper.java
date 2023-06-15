@@ -10,6 +10,4 @@ import org.mapstruct.Mapper;
 public interface AuthorMapper {
     AuthorInfoDTO authorToAuthorInfoDTO(Author Author);
     Author authorFormDTOtoAuthor(AuthorFormDTO AuthorFormDTO);
-    Author authorInBookDTOtoAuthor(AuthorInBookDTO authorInBookDTO);
-    Author authorUpdateDTOtoAuthor(AuthorUpdateDTO authorUpdateDTO);
 }

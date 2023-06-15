@@ -11,7 +11,5 @@ public interface StudentMapper {
 
     StudentInfoDTO studentToStudentInfoDTO(Student Student);
     Student studentFormDTOtoStudent(StudentFormDTO StudentFormDTO);
-    Student studentInBorrowDTOtoStudent(StudentInBorrowDTO studentInBorrowDTO);
-    Student studentInStudentDebitDTOtoStudent(StudentInStudentDebit studentInStudentDebit);
-    
+
 }

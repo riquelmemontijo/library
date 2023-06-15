@@ -12,7 +12,4 @@ public interface BookcaseMapper {
     BookcaseInfoDTO bookcaseToBookcaseInfoDTO(Bookcase bookcase);
     Bookcase bookcaseFormDTOtoBookcase(BookcaseFormDTO bookcaseFormDTO);
 
-    Bookcase bookcaseUpdateDTOtoBookcase(BookcaseUpdateDTO bookcaseUpdateDTO);
-    Bookcase bookcaseInBookDTOtoBookcase(BookcaseInBookDTO bookcaseInBookDTO);
-
 }

@@ -10,6 +10,4 @@ public interface HallMapper {
 
     HallInfoDTO hallToHallInfoDTO(Hall Hall);
     Hall hallFormDTOtoHall(HallFormDTO HallFormDTO);
-
-    Hall hallInBookcaseDTOtoHall(HallInBookcaseDTO hallInBookDTO);
 }

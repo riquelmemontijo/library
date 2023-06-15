@@ -50,7 +50,7 @@ public class StudentDebitService {
     public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){
         var studentDebit = studentDebitRepository.findById(data.id())
                  .orElseThrow(() -> new RecordNotFoundException(data.id()));
-        studentDebitRepository.paidDebit(studentDebit);
+        studentDebit.setPaid(true);
         return studentDebitMapper.studentToStudentDebitInfoDTO(studentDebit);
     }
 
