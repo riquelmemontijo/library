@@ -40,8 +40,6 @@ public class Student {
         this.borrows = borrows;
     }
 
-
-
     public UUID getId() {
         return id;
     }
@@ -91,17 +89,9 @@ public class Student {
     }
 
     public void update(StudentUpdateDTO dto){
-        if(!dto.name().isBlank()){
-           this.name = dto.name();
-        }
-        if(dto.dateOfBirth() != null){
-            this.dateOfBirth = dto.dateOfBirth();
-        }
-        if(!dto.email().isBlank()){
-            this.email = dto.email();
-        }
-        if(!dto.phoneNumber().isBlank()){
-            this.phoneNumber = dto.phoneNumber();
-        }
+       this.name = dto.name();
+       this.dateOfBirth = dto.dateOfBirth();
+       this.email = dto.email();
+       this.phoneNumber = dto.phoneNumber();
     }
 }

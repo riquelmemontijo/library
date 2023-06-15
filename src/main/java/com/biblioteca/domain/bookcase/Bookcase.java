@@ -3,9 +3,6 @@ package com.biblioteca.domain.bookcase;
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.bookcase.dto.BookcaseUpdateDTO;
 import com.biblioteca.domain.hall.Hall;
-import com.biblioteca.domain.hall.HallMapper;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,11 +22,6 @@ public class Bookcase {
     @ManyToOne
     @JoinColumn(name = "fk_hall", nullable = false)
     private Hall hall;
-
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private HallMapper hallMapper;
 
     public Bookcase() {
     }
@@ -73,21 +65,9 @@ public class Bookcase {
         this.hall = hall;
     }
 
-    public HallMapper getHallMapper() {
-        return hallMapper;
-    }
-
-    public void setHallMapper(HallMapper hallMapper) {
-        this.hallMapper = hallMapper;
-    }
-
     public void update(BookcaseUpdateDTO dto){
-        if(!dto.alias().isBlank()){
-            this.alias = dto.alias();
-        }
-        if(dto.hall() != null){
-            this.hall = hallMapper.hallInBookcaseDTOtoHall(dto.hall());
-        }
+        this.alias = dto.alias();
+        this.hall = new Hall(dto.hall().id(), dto.hall().alias(), null);
     }
 
 }

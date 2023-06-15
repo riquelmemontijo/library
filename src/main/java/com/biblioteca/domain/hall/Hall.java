@@ -53,8 +53,6 @@ public class Hall {
     }
 
     public void update(HallUpdateDTO dto){
-        if(!dto.alias().isBlank()){
-            this.alias = dto.alias();
-        }
+        this.alias = dto.alias();
     }
 }

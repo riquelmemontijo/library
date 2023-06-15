@@ -22,7 +22,7 @@ public interface StudentDebitRepository extends JpaRepository<StudentDebit, UUID
     @Modifying
     @Query("""
               UPDATE StudentDebit sd
-              SET SD.isPaid = TRUE
+              SET sd.isPaid = TRUE
               WHERE sd = :studentDebit
            """)
     void paidDebit(StudentDebit studentDebit);

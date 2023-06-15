@@ -52,8 +52,6 @@ public class Author {
     }
 
     public void update(AuthorUpdateDTO dto){
-        if(!dto.name().isBlank()){
-            this.name = dto.name();
-        }
+        this.name = dto.name();
     }
 }

@@ -1,14 +1,9 @@
 package com.biblioteca.domain.book;
 
 import com.biblioteca.domain.author.Author;
-import com.biblioteca.domain.author.AuthorMapper;
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
 import com.biblioteca.domain.bookcase.Bookcase;
 import com.biblioteca.domain.gender.Gender;
-import com.biblioteca.domain.gender.GenderMapper;
-import com.biblioteca.domain.gender.GenderMapperImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -42,16 +37,6 @@ public class Book {
     private List<Author> authors;
     private Integer units;
     private Integer availableUnits;
-
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private GenderMapper genderMapper;
-
-    @JsonIgnore
-    @Autowired
-    @Transient
-    private AuthorMapper authorMapper;
     public Book() {
     }
 
@@ -61,8 +46,7 @@ public class Book {
                 List<Bookcase> bookcases,
                 List<Author> authors,
                 Integer units,
-                Integer availableUnits,
-                GenderMapper genderMapper) {
+                Integer availableUnits) {
         this.id = id;
         this.title = title;
         this.genders = genders;
@@ -70,7 +54,6 @@ public class Book {
         this.authors = authors;
         this.units = units;
         this.availableUnits = availableUnits;
-        this.genderMapper = genderMapper;
     }
 
     public UUID getId() {
@@ -129,27 +112,14 @@ public class Book {
         this.availableUnits = availableUnits;
     }
 
-    public GenderMapper getGenderMapper() {
-        return genderMapper;
-    }
-
-    public void setGenderMapper(GenderMapper genderMapper) {
-        this.genderMapper = genderMapper;
-    }
-
     public void update(BookUpdateDTO bookUpdateDTO){
-
-        this.genderMapper = new GenderMapperImpl();
-
         this.title = bookUpdateDTO.title();
         this.genders = bookUpdateDTO.genders()
                                     .stream()
-                                    .map(genderMapper::genderInBookDTOtoGender)
-                                    .toList();
+                                    .map(genderDTO -> new Gender(genderDTO.id(), genderDTO.name())).toList();
         this.authors = bookUpdateDTO.authors()
                                     .stream()
-                                    .map(authorMapper::authorInBookDTOtoAuthor)
-                                    .toList();
+                                    .map(authorDTO -> new Author(authorDTO.id(), authorDTO.name(), null)).toList();
     }
 
 }

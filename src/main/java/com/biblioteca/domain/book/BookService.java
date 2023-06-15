@@ -36,7 +36,6 @@ public class BookService {
 
     @Transactional
     public BookInfoDTO create(BookFormDTO data){
-        System.out.println("Service: " + data);
         var book = bookRepository.save(bookMapper.bookFormDTOtoBook(data));
         return bookMapper.bookToBookInfoDTO(book);
     }
@@ -52,15 +51,18 @@ public class BookService {
         return bookMapper.bookToBookInfoDTO(book);
     }
 
+    @Transactional
     public void delete(UUID id){
         var book = bookRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         bookRepository.delete(book);
     }
 
+    @Transactional
     public void decreaseStock(List<Book> books){
         bookRepository.decreaseStock(books);
     }
 
+    @Transactional
     public void addStock(List<Book> books){
         bookRepository.addStock(books);
     }

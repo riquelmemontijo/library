@@ -25,14 +25,6 @@ public class StudentDebit {
     public StudentDebit() {
     }
 
-    public StudentDebit(UUID id, BigDecimal value, Boolean isPaid, Borrow borrow, Student student) {
-        this.id = id;
-        this.value = value;
-        this.isPaid = isPaid;
-        this.borrow = borrow;
-        this.student = student;
-    }
-
     public StudentDebit(BigDecimal value, Boolean isPaid, Borrow borrow, Student student) {
         this.value = value;
         this.isPaid = isPaid;

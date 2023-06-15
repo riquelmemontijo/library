@@ -21,10 +21,9 @@ public class Gender {
     public Gender() {
     }
 
-    public Gender(UUID id, String name, List<Book> books) {
+    public Gender(UUID id, String name) {
         this.id = id;
         this.name = name;
-        this.books = books;
     }
 
     public UUID getId() {
