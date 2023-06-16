@@ -5,6 +5,7 @@ import com.biblioteca.domain.student.Student;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,9 +27,9 @@ public class Borrow {
                inverseJoinColumns = @JoinColumn(name = "id_book"))
     private List<Book> books;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime borrowDate;
-    private LocalDateTime dueDate;
-    private LocalDateTime returnDate;
+    private LocalDate borrowDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
     private Boolean isFinished;
 
     public Borrow() {
@@ -37,9 +38,9 @@ public class Borrow {
     public Borrow(UUID id,
                   Student student,
                   List<Book> books,
-                  LocalDateTime borrowDate,
-                  LocalDateTime dueDate,
-                  LocalDateTime returnDate,
+                  LocalDate borrowDate,
+                  LocalDate dueDate,
+                  LocalDate returnDate,
                   Boolean isFinished) {
         this.id = id;
         this.student = student;
@@ -74,27 +75,27 @@ public class Borrow {
         this.books = books;
     }
 
-    public LocalDateTime getBorrowDate() {
+    public LocalDate getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(LocalDateTime borrowDate) {
+    public void setBorrowDate(LocalDate borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public LocalDateTime getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDateTime getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDateTime returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 

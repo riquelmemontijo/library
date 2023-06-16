@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public record BorrowFormDTO(@Valid
@@ -17,5 +17,5 @@ public record BorrowFormDTO(@Valid
                             List<BookInBorrowDTO> books,
                             @NotNull(message = "A data do empréstimo é obrigatória")
                             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-                            LocalDateTime borrowDate) {
+                            LocalDate borrowDate) {
 }

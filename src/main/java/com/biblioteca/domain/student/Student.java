@@ -1,6 +1,7 @@
 package com.biblioteca.domain.student;
 
 import com.biblioteca.domain.borrow.Borrow;
+import com.biblioteca.domain.debit.StudentDebit;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
 
 import javax.persistence.*;
@@ -22,6 +23,8 @@ public class Student {
     private String phoneNumber;
     @OneToMany(mappedBy = "student")
     private List<Borrow> borrows;
+    @OneToMany(mappedBy = "student")
+    private List<StudentDebit> debits;
 
     public Student() {
     }
@@ -86,6 +89,14 @@ public class Student {
 
     public void setBorrows(List<Borrow> borrows) {
         this.borrows = borrows;
+    }
+
+    public List<StudentDebit> getDebits() {
+        return debits;
+    }
+
+    public void setDebits(List<StudentDebit> debits) {
+        this.debits = debits;
     }
 
     public void update(StudentUpdateDTO dto){
