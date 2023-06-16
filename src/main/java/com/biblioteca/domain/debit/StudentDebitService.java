@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Service
 public class StudentDebitService {
-    
+
     private final StudentDebitRepository studentDebitRepository;
     private final StudentDebitMapper studentDebitMapper;
 
