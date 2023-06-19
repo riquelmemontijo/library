@@ -2,11 +2,9 @@ package com.biblioteca.domain.borrow;
 
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.student.Student;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -105,11 +103,11 @@ public class Borrow {
         this.returnDate = returnDate;
     }
 
-    public Boolean getFinished() {
+    public Boolean getIsFinished() {
         return isFinished;
     }
 
-    public void setFinished(Boolean finished) {
+    public void setIsFinished(Boolean finished) {
         isFinished = finished;
     }
 }

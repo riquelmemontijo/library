@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.Temporal;
 import java.util.UUID;
 
 @Service
@@ -43,8 +47,12 @@ public class StudentDebitService {
     }
 
     private BigDecimal calculateValueOfDebit(Borrow borrow) {
-        long daysOfDelay = Duration.between(borrow.getDueDate(), borrow.getReturnDate()).toDays();
+        Integer daysOfDelay = calculateDaysOfDelay(borrow.getDueDate(), borrow.getReturnDate());
         return BigDecimal.valueOf((daysOfDelay * 0.50) + 2.50);
+    }
+
+    private Integer calculateDaysOfDelay(LocalDate dueDate, LocalDate returnDate){
+        return Period.between(dueDate, returnDate).getDays();
     }
 
     public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){

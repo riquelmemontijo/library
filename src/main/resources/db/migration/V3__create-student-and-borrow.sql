@@ -12,7 +12,9 @@ create table if not exists borrow (
     borrow_date date not null,
     due_date date not null,
     return_date date,
-    is_finished boolean
+    is_finished boolean,
+
+    constraint fk_student foreign key (fk_student) references student(id)
 );
 
 create table if not exists borrow_books (

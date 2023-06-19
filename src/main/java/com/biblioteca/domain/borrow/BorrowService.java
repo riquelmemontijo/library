@@ -1,11 +1,13 @@
 package com.biblioteca.domain.borrow;
 
+import com.biblioteca.domain.book.BookRepository;
 import com.biblioteca.domain.book.BookService;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowReturnDTO;
 import com.biblioteca.domain.borrow.rules.ValidateBorrow;
 import com.biblioteca.domain.debit.StudentDebitService;
+import com.biblioteca.domain.student.StudentRepository;
 import com.biblioteca.infrastructure.exception.BusinessRulesException;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import org.springframework.data.domain.Page;
@@ -20,13 +22,17 @@ import java.util.UUID;
 public class BorrowService {
 
     private final BorrowRepository borrowRepository;
+    private final StudentRepository studentRepository;
+    private final BookRepository bookRepository;
     private final BorrowMapper borrowMapper;
     private final StudentDebitService studentDebitService;
     private final BookService bookService;
     private final List<ValidateBorrow> validations;
 
-    public BorrowService(BorrowRepository borrowRepository, BorrowMapper borrowMapper, StudentDebitService studentDebitService, BookService bookService, List<ValidateBorrow> validations) {
+    public BorrowService(BorrowRepository borrowRepository, StudentRepository studentRepository, BookRepository bookRepository, BorrowMapper borrowMapper, StudentDebitService studentDebitService, BookService bookService, List<ValidateBorrow> validations) {
         this.borrowRepository = borrowRepository;
+        this.studentRepository = studentRepository;
+        this.bookRepository = bookRepository;
         this.borrowMapper = borrowMapper;
         this.studentDebitService = studentDebitService;
         this.bookService = bookService;
@@ -52,8 +58,22 @@ public class BorrowService {
 
     @Transactional
     public BorrowInfoDTO makeBorrow(BorrowFormDTO borrowFormDTO){
+
         var borrow = borrowMapper.borrowFormDTOtoBorrow(borrowFormDTO);
         borrow.setDueDate(borrow.getBorrowDate().plusDays(7));
+
+        var student = studentRepository.findById(borrowFormDTO.student().id())
+                .orElseThrow(() -> new RecordNotFoundException(borrowFormDTO.student().id()));
+
+        var books = borrowFormDTO.books()
+                                 .stream()
+                                 .map(book -> bookRepository.findById(book.id())
+                                         .orElseThrow(() -> new RecordNotFoundException(book.id())))
+                                 .toList();
+
+        borrow.setStudent(student);
+        borrow.setBooks(books);
+        borrow.setIsFinished(false);
         validations.forEach(validation -> validation.validate(borrow));
         borrowRepository.save(borrow);
         bookService.decreaseStock(borrow.getBooks());
@@ -65,17 +85,18 @@ public class BorrowService {
         var borrow = borrowRepository.findById(borrowReturnDTO.id())
                 .orElseThrow(() -> new RecordNotFoundException(borrowReturnDTO.id()));
 
-        if(borrow.getFinished()){
+        if(borrow.getIsFinished()){
            throw new BusinessRulesException("This borrow already been finished");
         }
 
         borrow.setReturnDate(borrowReturnDTO.returnDate());
-        borrow.setFinished(true);
+        borrow.setIsFinished(true);
         bookService.addStock(borrow.getBooks());
 
         if(borrow.getDueDate().isBefore(borrow.getReturnDate())){
             studentDebitService.generateStudentDebit(borrow);
         }
+
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
 }

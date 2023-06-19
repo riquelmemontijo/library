@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -25,4 +26,6 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
               WHERE b IN (:books)
            """)
     void addStock(List<Book> books);
+
+    Optional<Book> findBookByTitle(String title);
 }

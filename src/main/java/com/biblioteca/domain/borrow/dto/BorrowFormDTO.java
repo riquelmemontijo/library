@@ -16,6 +16,6 @@ public record BorrowFormDTO(@Valid
                             @NotNull(message = "At least one book is required")
                             List<BookInBorrowDTO> books,
                             @NotNull(message = "The borrow date is required")
-                            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                            @JsonFormat(pattern = "yyyy-MM-dd")
                             LocalDate borrowDate) {
 }
