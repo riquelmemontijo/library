@@ -11,7 +11,7 @@ public class ValidateIfStudentHasDelays implements ValidateBorrow{
     @Override
     public void validate(Borrow borrow){
         borrow.getStudent().getBorrows().forEach(borrowOfStudent ->{
-            if(borrowOfStudent.getReturnDate().isBefore(LocalDate.now())){
+            if(borrowOfStudent.getDueDate().isBefore(LocalDate.now())){
                 throw new BusinessRulesException("Student has borrows with delay");
             }
         });
