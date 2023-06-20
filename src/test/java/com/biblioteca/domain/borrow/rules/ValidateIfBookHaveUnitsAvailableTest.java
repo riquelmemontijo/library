@@ -3,6 +3,7 @@ package com.biblioteca.domain.borrow.rules;
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.borrow.Borrow;
 import com.biblioteca.infrastructure.exception.BusinessRulesException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ValidateIfBookHaveUnitsAvailableTest {
 
     @Test
+    @DisplayName("Should throw exception when book don't have available units")
     void throwExceptionIfBookDontHaveUnitsAvailable(){
         ValidateIfBookHaveUnitsAvailable rule = new ValidateIfBookHaveUnitsAvailable();
         var book = new Book();
@@ -24,6 +26,7 @@ public class ValidateIfBookHaveUnitsAvailableTest {
     }
 
     @Test
+    @DisplayName("Shouldn't throw exception when book have available units")
     void dontThrowExceptionIfBookHaveUnitsAvailable(){
         ValidateIfBookHaveUnitsAvailable rule = new ValidateIfBookHaveUnitsAvailable();
         var book = new Book();
