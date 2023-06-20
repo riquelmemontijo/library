@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
-public record GenderFormDTO (@NotBlank(message = "A descrição do gênero é obrigatória")
-                             @Length(min = 0, max = 20, message = "A descrição deve conter menos de 20 caracteres")
+public record GenderFormDTO (@NotBlank(message = "The description is required")
+                             @Length(min = 0, max = 20, message = "The description must be less than twenty characters")
                              String name){
 }

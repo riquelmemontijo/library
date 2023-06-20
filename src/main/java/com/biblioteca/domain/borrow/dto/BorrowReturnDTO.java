@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record BorrowReturnDTO (@NotNull(message = "O id é obrigatório")
+public record BorrowReturnDTO (@NotNull(message = "The id is required")
                                UUID id,
-                               @NotNull(message = "A data da devolução é obrigatória")
+                               @NotNull(message = "The return date is required")
                                @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                LocalDate returnDate){
 }

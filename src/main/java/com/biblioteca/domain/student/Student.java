@@ -15,14 +15,23 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(nullable = false)
     private LocalDate dateOfBirth;
+
+    @Column(nullable = false, length = 100)
     private String email;
+
+    @Column(nullable = false, length = 20)
     private String phoneNumber;
+
     @OneToMany(mappedBy = "student")
     private List<Borrow> borrows;
+
     @OneToMany(mappedBy = "student")
     private List<StudentDebit> debits;
 

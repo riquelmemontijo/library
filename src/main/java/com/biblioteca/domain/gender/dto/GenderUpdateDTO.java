@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record GenderUpdateDTO(@NotNull(message = "O id é obrigatório")
+public record GenderUpdateDTO(@NotNull(message = "The id is required")
                               UUID id,
-                              @NotBlank(message = "A descrição é obrigatória")
+                              @NotBlank(message = "The description is required")
                               String name) {
 }

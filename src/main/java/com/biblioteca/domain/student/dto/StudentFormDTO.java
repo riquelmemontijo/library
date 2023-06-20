@@ -1,17 +1,18 @@
 package com.biblioteca.domain.student.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-public record StudentFormDTO(@NotBlank(message = "O nome é obrigatório")
+public record StudentFormDTO(@NotBlank(message = "The name is required")
                              String name,
-                             @Past(message = "Data de nascimento inválida")
-                             @NotNull(message = "A data de nascimento é obrigatória")
+                             @Past(message = "That date of birth is invalid")
+                             @NotNull(message = "Date of birth is required")
                              LocalDate dateOfBirth,
-                             @Email(message = "Email em formato inválido")
+                             @NotBlank(message = "The email is required")
+                             @Email(message = "That format of email is invalid")
                              String email,
+                             @NotBlank(message = "The phone number is required")
+                             @Pattern(message = "Ivalid format of phone number",
+                                      regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}")
                              String phoneNumber) {
 }

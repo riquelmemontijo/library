@@ -21,5 +21,4 @@ public class ApplicationControllerAdvice {
         return ex.getMessage();
     }
 
-
 }

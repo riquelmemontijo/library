@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record GenderInBookDTO(@NotNull(message = "O id do gênero é obrigatório")
+public record GenderInBookDTO(@NotNull(message = "Genders id is required")
                               UUID id,
-                              @NotBlank(message = "A descrição do gênero é obrigatória")
+                              @NotBlank(message = "Description of gender ir required")
                               String name) {
 }

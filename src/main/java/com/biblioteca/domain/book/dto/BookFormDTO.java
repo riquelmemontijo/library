@@ -10,18 +10,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-public record BookFormDTO(@NotBlank(message = "O titulo é obrigatório")
+public record BookFormDTO(@NotBlank(message = "The title is required")
                           String title,
                           @Valid
-                          @NotNull(message = "Ao menos um gênero é obrigatório")
+                          @NotNull(message = "At least one gender is required")
                           List<GenderInBookDTO> genders,
                           @Valid
                           List<BookcaseInBookDTO> bookcases,
                           @Valid
-                          @NotNull(message = "O autor é obrigatório")
+                          @NotNull(message = "The author is required")
                           List<AuthorInBookDTO> authors,
-                          @PositiveOrZero(message = "A quantidade de unidades deve ser iguail ou maior que zero")
+                          @PositiveOrZero(message = "The quantity of units should be bigger or equal to zero")
                           Integer units,
-                          @PositiveOrZero(message = "As unidades disponíveis deve ser iguail ou maior que zero")
+                          @PositiveOrZero(message = "The quantity of available units should be bigger or equal to zero")
                           Integer availableUnits) {
 }

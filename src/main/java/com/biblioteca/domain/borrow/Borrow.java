@@ -16,20 +16,26 @@ public class Borrow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
     @ManyToOne
-    @JoinColumn(name = "pk_student")
+    @JoinColumn(name = "fk_student")
     private Student student;
+
     @ManyToMany
     @JoinTable(name = "borrow_books",
                joinColumns = @JoinColumn(name = "id_borrow"),
                inverseJoinColumns = @JoinColumn(name = "id_book"))
     private List<Book> books;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
+    @Column(nullable = false)
     private LocalDate borrowDate;
+
+    @Column(nullable = false)
     private LocalDate dueDate;
+
     private LocalDate returnDate;
+
     private Boolean isFinished;
 
     public Borrow() {

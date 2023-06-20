@@ -13,11 +13,17 @@ public class StudentDebit {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Column(nullable = false)
     private BigDecimal value;
+
+    @Column(nullable = false)
     private Boolean isPaid;
+
     @OneToOne
     @JoinColumn(name = "fk_borrow")
     private Borrow borrow;
+
     @ManyToOne
     @JoinColumn(name = "fk_student")
     private Student student;

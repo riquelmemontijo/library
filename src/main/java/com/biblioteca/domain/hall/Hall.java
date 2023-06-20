@@ -13,9 +13,11 @@ public class Hall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
+    @Column(nullable = false, length = 100)
     private String alias;
+
     @OneToMany(mappedBy = "hall")
     private List<Bookcase> bookcases;
 

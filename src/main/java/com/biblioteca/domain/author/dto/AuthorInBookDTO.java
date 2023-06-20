@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record AuthorInBookDTO(@NotNull(message = "Author id is required")
+public record AuthorInBookDTO(@NotNull(message = "Authors id is required")
                               UUID id,
-                              @NotBlank(message = "Author name is required")
+                              @NotBlank(message = "Authors name is required")
                               String name) {
 }

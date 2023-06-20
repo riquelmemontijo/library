@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record HallInBookcaseDTO(@NotNull(message = "O id do corredor é obrigatório")
+public record HallInBookcaseDTO(@NotNull(message = "Halls id is required")
                                 UUID id,
-                                @NotBlank(message = "A descrição do corredor é obrigatória")
+                                @NotBlank(message = "Halls description is required")
                                 String alias) {
 }

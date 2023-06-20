@@ -14,7 +14,10 @@ public class Author {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Column(nullable = false, length = 150)
     private String name;
+
     @ManyToMany(mappedBy = "authors")
     private List<Book> books;
 

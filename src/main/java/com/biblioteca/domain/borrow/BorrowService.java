@@ -70,12 +70,12 @@ public class BorrowService {
         }
 
         borrow.setReturnDate(borrowReturnDTO.returnDate());
+        borrow.setFinished(true);
         bookService.addStock(borrow.getBooks());
 
         if(borrow.getDueDate().isBefore(borrow.getReturnDate())){
             studentDebitService.generateStudentDebit(borrow);
         }
-
         return borrowMapper.borrowToBorrowInfoDTO(borrow);
     }
 }

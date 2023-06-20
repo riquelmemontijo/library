@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record BookInBorrowDTO(@NotNull(message = "O id do livro é obrigatório")
+public record BookInBorrowDTO(@NotNull(message = "Books id is required")
                               UUID id,
-                              @NotBlank(message = "O título do livro é obrigatório")
+                              @NotBlank(message = "Books title is required")
                               String title) {
 }

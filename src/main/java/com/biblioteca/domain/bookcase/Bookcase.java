@@ -14,11 +14,14 @@ public class Bookcase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
+    @Column(nullable = false, length = 100)
     private String alias;
+
     @ManyToMany(mappedBy = "bookcases")
     private List<Book> books;
+
     @ManyToOne
     @JoinColumn(name = "fk_hall", nullable = false)
     private Hall hall;

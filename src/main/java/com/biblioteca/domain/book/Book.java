@@ -17,25 +17,33 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
+    @Column(nullable = false, length = 100)
     private String title;
+
     @ManyToMany
     @JoinTable(name = "book_genders",
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_gender"))
     private List<Gender> genders;
+
     @ManyToMany
     @JoinTable(name = "bookcase_books",
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_bookcase"))
     private List<Bookcase> bookcases;
+
     @ManyToMany
     @JoinTable(name = "author_books",
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_author"))
     private List<Author> authors;
+
+    @Column(nullable = false)
     private Integer units;
+
+    @Column(nullable = false)
     private Integer availableUnits;
     public Book() {
     }

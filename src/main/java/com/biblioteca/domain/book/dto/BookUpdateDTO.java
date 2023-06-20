@@ -10,16 +10,16 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public record BookUpdateDTO(@NotNull(message = "O id é obrigatorio")
+public record BookUpdateDTO(@NotNull(message = "The id is required")
                             UUID id,
-                            @NotBlank(message = "O título é obrigatório")
+                            @NotBlank(message = "The title is required")
                             String title,
                             @Valid
-                            @NotNull(message = "Ao menos um gênero é obrigatório")
+                            @NotNull(message = "At least one gender is required")
                             List<GenderInBookDTO> genders,
                             @Valid
                             List<BookcaseInBookDTO> bookcases,
                             @Valid
-                            @NotNull(message = "O autor é obrigatório")
+                            @NotNull(message = "The author is required")
                             List<AuthorInBookDTO> authors) {
 }

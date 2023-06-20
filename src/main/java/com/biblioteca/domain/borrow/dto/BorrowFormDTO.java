@@ -10,12 +10,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record BorrowFormDTO(@Valid
-                            @NotNull(message = "O estudande é obrigatório")
+                            @NotNull(message = "The student is required")
                             StudentInBorrowDTO student,
                             @Valid
-                            @NotNull(message = "Ao menos um livro é obrigatório")
+                            @NotNull(message = "At least one book is required")
                             List<BookInBorrowDTO> books,
-                            @NotNull(message = "A data do empréstimo é obrigatória")
+                            @NotNull(message = "The borrow date is required")
                             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                             LocalDate borrowDate) {
 }

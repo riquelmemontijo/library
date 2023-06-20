@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public record BookcaseUpdateDTO(@NotNull(message = "O id da estante é obrigatórip")
+public record BookcaseUpdateDTO(@NotNull(message = "The id is required")
                                 UUID id,
-                                @NotBlank(message = "O nome da estante é obrigatório")
+                                @NotBlank(message = "The name is required")
                                 String alias,
                                 @Valid
-                                @NotNull(message = "O corredor é obrigatório")
+                                @NotNull(message = "The hall is required")
                                 HallInBookcaseDTO hall) {
 }

@@ -12,9 +12,11 @@ import java.util.UUID;
 public class Gender {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
     private UUID id;
+
+    @Column(nullable = false, length = 20)
     private String name;
+
     @ManyToMany(mappedBy = "genders")
     private List<Book> books;
 
