@@ -8,12 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.temporal.Temporal;
 import java.util.UUID;
 
 @Service
@@ -38,12 +36,21 @@ public class StudentDebitService {
                 .map(studentDebitMapper::studentToStudentDebitInfoDTO);
     }
 
+    @Transactional
     public void generateStudentDebit(Borrow borrow){
         var studentDebit = new StudentDebit(calculateValueOfDebit(borrow),
                                       false,
                                             borrow,
                                             borrow.getStudent());
         studentDebitRepository.save(studentDebit);
+    }
+
+    @Transactional
+    public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){
+        var studentDebit = studentDebitRepository.findById(data.id())
+                 .orElseThrow(() -> new RecordNotFoundException(data.id()));
+        studentDebit.setIsPaid(true);
+        return studentDebitMapper.studentToStudentDebitInfoDTO(studentDebit);
     }
 
     private BigDecimal calculateValueOfDebit(Borrow borrow) {
@@ -53,13 +60,6 @@ public class StudentDebitService {
 
     private Integer calculateDaysOfDelay(LocalDate dueDate, LocalDate returnDate){
         return Period.between(dueDate, returnDate).getDays();
-    }
-
-    public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){
-        var studentDebit = studentDebitRepository.findById(data.id())
-                 .orElseThrow(() -> new RecordNotFoundException(data.id()));
-        studentDebit.setPaid(true);
-        return studentDebitMapper.studentToStudentDebitInfoDTO(studentDebit);
     }
 
 }

@@ -12,7 +12,7 @@ public class ValidateIfStudentHasDebit implements ValidateBorrow{
     public void validate(Borrow borrow){
         if(Objects.nonNull(borrow.getStudent().getDebits())){
             borrow.getStudent().getDebits().forEach(studentDebit -> {
-                if (!studentDebit.getPaid()){
+                if (!studentDebit.getIsPaid()){
                     throw new BusinessRulesException("Student has not paid debits");
                 }
             });
