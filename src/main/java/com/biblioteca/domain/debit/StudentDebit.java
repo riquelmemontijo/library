@@ -54,11 +54,11 @@ public class StudentDebit {
         this.value = value;
     }
 
-    public Boolean getIsPaid() {
+    public Boolean getPaid() {
         return isPaid;
     }
 
-    public void setIsPaid(Boolean paid) {
+    public void setPaid(Boolean paid) {
         isPaid = paid;
     }
 
