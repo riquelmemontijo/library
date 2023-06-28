@@ -1,6 +1,6 @@
 package com.biblioteca.domain.author.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public record AuthorUpdateDTO(@NotBlank(message = "Authors id is required")

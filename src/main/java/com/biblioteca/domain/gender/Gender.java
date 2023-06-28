@@ -3,7 +3,7 @@ package com.biblioteca.domain.gender;
 import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 

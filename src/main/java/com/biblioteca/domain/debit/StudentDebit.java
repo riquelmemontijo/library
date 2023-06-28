@@ -3,7 +3,7 @@ package com.biblioteca.domain.debit;
 import com.biblioteca.domain.borrow.Borrow;
 import com.biblioteca.domain.student.Student;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.biblioteca.domain.student.dto;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 public record StudentFormDTO(@NotBlank(message = "The name is required")

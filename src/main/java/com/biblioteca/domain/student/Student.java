@@ -4,7 +4,7 @@ import com.biblioteca.domain.borrow.Borrow;
 import com.biblioteca.domain.debit.StudentDebit;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;

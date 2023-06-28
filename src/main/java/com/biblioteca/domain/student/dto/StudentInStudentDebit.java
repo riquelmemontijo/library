@@ -1,7 +1,7 @@
 package com.biblioteca.domain.student.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record StudentInStudentDebit(@NotNull(message = "O id do estudante é obrigatorio")

@@ -1,8 +1,8 @@
 package com.biblioteca.tasks;
 
 import com.biblioteca.domain.borrow.BorrowRepository;
+import com.biblioteca.services.email.Email;
 import com.biblioteca.services.email.EmailService;
-import com.biblioteca.services.email.dto.EmailModelDTO;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,14 +19,27 @@ public class SendMailToNotifyBorrowExpiration {
         this.borrowRepository = borrowRepository;
     }
 
-    @Scheduled(fixedDelay = 10000L)
+    @Scheduled(cron = "0 0 6 * * *")
     private void getStudentsWithDelay(){
         var borrows = borrowRepository.findBorrowDueToday();
-        borrows.ifPresent(n -> {
-            n.forEach(record -> {
-                emailService.sendMimeEmail(new EmailModelDTO(""));
-            });
-        });
+        borrows.ifPresent(n -> n.forEach(record ->
+            emailService.sendSimpleMail(new Email(getSubject(),
+                                             "riquelmemontijo@gmail.com",
+                                                  record.email(),
+                                                  getContent(record.name())))));
+    }
+
+    private String getContent(String name){
+        return """
+                  Hello, %s!
+                  Your borrow expires tomorrow!
+                  Plan ahead so as not to delay the return of books. Avoid fines.
+                  - Library
+               """.formatted(name.split(" ")[0]);
+    }
+
+    private String getSubject(){
+        return "You borrow expires tomorrow";
     }
 
 }

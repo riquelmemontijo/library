@@ -4,7 +4,7 @@ import com.biblioteca.domain.book.Book;
 import com.biblioteca.domain.bookcase.dto.BookcaseUpdateDTO;
 import com.biblioteca.domain.hall.Hall;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 

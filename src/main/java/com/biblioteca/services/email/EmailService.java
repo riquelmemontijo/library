@@ -1,36 +1,43 @@
 package com.biblioteca.services.email;
 
-import com.biblioteca.services.email.dto.EmailModelDTO;
-import jakarta.mail.Message;
+import jakarta.transaction.Transactional;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class EmailService {
 
     private final JavaMailSender mailSender;
+    private final EmailRepository emailRepository;
 
-    public EmailService(JavaMailSender mailSender) {
+    public EmailService(JavaMailSender mailSender, EmailRepository emailRepository) {
         this.mailSender = mailSender;
+        this.emailRepository = emailRepository;
     }
 
-    public void sendSimpleMail(EmailModelDTO emailDTO){
-        var mensagem = new SimpleMailMessage();
-        mensagem.setSubject(emailDTO.subject());
-        mensagem.setFrom(emailDTO.from());
-        mensagem.setTo(emailDTO.to());
-        mensagem.setText(emailDTO.content());
-        mailSender.send(mensagem);
-    }
+    @Transactional
+    public void sendSimpleMail(Email email){
 
-    public void sendMimeEmail(EmailModelDTO emailDTO){
-        mailSender.send(mimeMessage -> {
-            mimeMessage.setSubject(emailDTO.subject());
-            mimeMessage.setFrom(emailDTO.from());
-            mimeMessage.setRecipients(Message.RecipientType.TO, emailDTO.to());
-            mimeMessage.setContent(emailDTO.content(), "text/html; charset=utf-8");
-        });
+        var message = new SimpleMailMessage();
+        email.setSendDate(LocalDateTime.now());
+        message.setSubject(email.getSubject());
+        message.setFrom(email.getFrom());
+        message.setTo(email.getTo());
+        message.setText(email.getContent());
+
+        try{
+            mailSender.send(message);
+            email.setStatus(StatusEmail.SENT);
+            emailRepository.save(email);
+        }catch (MailException mailException){
+            email.setStatus(StatusEmail.ERROR);
+            emailRepository.save(email);
+        }
+
     }
 
 }

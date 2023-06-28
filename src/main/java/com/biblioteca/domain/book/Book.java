@@ -6,7 +6,7 @@ import com.biblioteca.domain.bookcase.Bookcase;
 import com.biblioteca.domain.gender.Gender;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 

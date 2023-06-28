@@ -3,7 +3,7 @@ package com.biblioteca.domain.author;
 import com.biblioteca.domain.author.dto.AuthorUpdateDTO;
 import com.biblioteca.domain.book.Book;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
