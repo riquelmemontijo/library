@@ -27,4 +27,10 @@ public class ApplicationControllerAdvice {
         return "Data inconsistency";
     }
 
+    @ExceptionHandler(NoAuthorizationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBusinessRules(NoAuthorizationException ex){
+        return ex.getMessage();
+    }
+
 }

@@ -4,7 +4,7 @@ create table if not exists tb_user (
     username varchar(150) not null,
     password varchar(150) not null,
     email varchar(150) not null,
-    phone_number varchar(20) not null,
+    phone_number varchar(20),
     status varchar(15) not null,
     created_at date not null,
     updated_at date

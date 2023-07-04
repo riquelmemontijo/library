@@ -1,6 +1,7 @@
 package com.biblioteca.domain.user;
 
 import com.biblioteca.domain.role.Role;
+import com.biblioteca.domain.user.dto.UserUpdateDTO;
 import com.biblioteca.domain.user.enums.StatusUser;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
@@ -110,6 +111,18 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void update(UserUpdateDTO dto){
+        this.name = dto.name();
+        this.username = dto.username();
+        this.email = dto.email();
+        this.phoneNumber = dto.phoneNumber();
+    }
+
+    @Override
+    public String toString() {
+        return this.id.toString();
     }
 
     @Override

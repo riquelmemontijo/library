@@ -2,16 +2,21 @@ package com.biblioteca.domain.user;
 
 import com.biblioteca.configuration.security.Token;
 import com.biblioteca.configuration.security.TokenService;
+import com.biblioteca.domain.student.dto.StudentInfoDTO;
+import com.biblioteca.domain.student.dto.StudentUpdateDTO;
 import com.biblioteca.domain.user.dto.UserFormDTO;
 import com.biblioteca.domain.user.dto.UserInfoDTO;
 import com.biblioteca.domain.user.dto.UserLoginDTO;
+import com.biblioteca.domain.user.dto.UserUpdateDTO;
 import com.biblioteca.domain.user.enums.StatusUser;
+import com.biblioteca.infrastructure.exception.NoAuthorizationException;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,9 +77,38 @@ public class UserService {
                 .orElseThrow(() -> new RecordNotFoundException(id));
     }
 
+    @Transactional
+    public UserInfoDTO update(UserUpdateDTO userUpdateDTO){
+        var user = userRepository.findById(userUpdateDTO.id())
+                .orElseThrow(() -> new RecordNotFoundException(userUpdateDTO.id()));
+        if(validateUserDataUpdate(userUpdateDTO.id())){
+            user.update(userUpdateDTO);
+            return userMapper.userToUserInfoDTO(user);
+        }
+        throw new NoAuthorizationException("No authorization for this action.");
+
+    }
+
     public void delete(UUID id){
         var student = userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         userRepository.deleteById(student.getId());
+    }
+
+    public boolean validateUserDataUpdate(UUID idUserUpdate){
+        System.out.println(SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString());
+        var idAuthenticatedUser = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()
+                .toString()
+                .replace("Optional[", "")
+                .replace("]", "");
+        System.out.println(idAuthenticatedUser);
+        System.out.println(idUserUpdate);
+
+        return idAuthenticatedUser.equals(idUserUpdate.toString());
     }
 
     private List<String> extractRoles(String roles) {

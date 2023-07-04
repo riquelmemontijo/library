@@ -3,6 +3,7 @@ package com.biblioteca.domain.user;
 import com.biblioteca.domain.user.dto.UserFormDTO;
 import com.biblioteca.domain.user.dto.UserInfoDTO;
 import com.biblioteca.domain.user.dto.UserLoginDTO;
+import com.biblioteca.domain.user.dto.UserUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserInfoDTO> getById(@PathVariable UUID id){
         return ResponseEntity.ok(userService.getById(id));
+    }
+
+    @PutMapping
+    public ResponseEntity update(@RequestBody UserUpdateDTO data){
+        return ResponseEntity.ok(userService.update(data));
     }
 
     @DeleteMapping("/{id}")
