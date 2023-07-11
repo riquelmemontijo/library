@@ -33,4 +33,9 @@ public class ApplicationControllerAdvice {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public String handleBusinessRules(TokenExpiredException ex){
+        return ex.getMessage();
+    }
 }

@@ -14,7 +14,6 @@ public record StudentUpdateDTO(@NotNull(message = "The id is required")
                                @NotBlank(message = "The email is required")
                                @Email(message = "That format of email is invalid")
                                String email,
-                               @NotBlank(message = "The phone number is required")
                                @Pattern(message = "Ivalid format of phone number",
                                        regexp = "\\(\\d{2}\\)\\s?\\d{4,5}-\\d{4}")
                                String phoneNumber) {

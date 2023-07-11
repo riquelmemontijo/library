@@ -2,7 +2,6 @@ package com.biblioteca.services.email;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
