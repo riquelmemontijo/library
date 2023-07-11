@@ -4,10 +4,7 @@ import com.biblioteca.configuration.security.Token;
 import com.biblioteca.configuration.security.TokenService;
 import com.biblioteca.domain.student.dto.StudentInfoDTO;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
-import com.biblioteca.domain.user.dto.UserFormDTO;
-import com.biblioteca.domain.user.dto.UserInfoDTO;
-import com.biblioteca.domain.user.dto.UserLoginDTO;
-import com.biblioteca.domain.user.dto.UserUpdateDTO;
+import com.biblioteca.domain.user.dto.*;
 import com.biblioteca.domain.user.enums.StatusUser;
 import com.biblioteca.infrastructure.exception.NoAuthorizationException;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
@@ -86,7 +83,16 @@ public class UserService {
             return userMapper.userToUserInfoDTO(user);
         }
         throw new NoAuthorizationException("No authorization for this action.");
+    }
 
+    @Transactional
+    public String updatePassword(UserUpdatePasswordDTO data){
+        if(validateUserDataUpdate(data.id())){
+            var user = userRepository.getReferenceById(data.id());
+            user.setPassword(passwordEncoder.encode(data.password()));
+            return "Password update success";
+        }
+        throw new NoAuthorizationException("No authorization for this action");
     }
 
     public void delete(UUID id){
@@ -95,18 +101,12 @@ public class UserService {
     }
 
     public boolean validateUserDataUpdate(UUID idUserUpdate){
-        System.out.println(SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal()
-                .toString());
         var idAuthenticatedUser = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()
                 .toString()
                 .replace("Optional[", "")
                 .replace("]", "");
-        System.out.println(idAuthenticatedUser);
-        System.out.println(idUserUpdate);
 
         return idAuthenticatedUser.equals(idUserUpdate.toString());
     }

@@ -1,9 +1,6 @@
 package com.biblioteca.domain.user;
 
-import com.biblioteca.domain.user.dto.UserFormDTO;
-import com.biblioteca.domain.user.dto.UserInfoDTO;
-import com.biblioteca.domain.user.dto.UserLoginDTO;
-import com.biblioteca.domain.user.dto.UserUpdateDTO;
+import com.biblioteca.domain.user.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,9 +40,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
-    @PutMapping
+    @PutMapping("/update-data")
     public ResponseEntity update(@RequestBody UserUpdateDTO data){
         return ResponseEntity.ok(userService.update(data));
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity updatePassword(@RequestBody UserUpdatePasswordDTO data){
+        return ResponseEntity.ok(userService.updatePassword(data));
     }
 
     @DeleteMapping("/{id}")
