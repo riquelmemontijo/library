@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "tb_user")
 @SQLDelete(sql = "UPDATE tb_user SET status = 'INACTIVE' WHERE id = ?")
 @Where(clause = "status = 'ACTIVE'")
-public class User implements UserDetails {
+public class UserDomain implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public class User implements UserDetails {
                inverseJoinColumns = @JoinColumn(name = "id_role"))
     private List<Role> roles;
 
-    public User() {
+    public UserDomain() {
     }
 
     public UUID getId() {

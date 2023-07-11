@@ -2,12 +2,14 @@ package com.biblioteca.domain.user;
 
 import com.biblioteca.configuration.security.Token;
 import com.biblioteca.configuration.security.TokenService;
-import com.biblioteca.domain.student.dto.StudentInfoDTO;
-import com.biblioteca.domain.student.dto.StudentUpdateDTO;
 import com.biblioteca.domain.user.dto.*;
 import com.biblioteca.domain.user.enums.StatusUser;
 import com.biblioteca.infrastructure.exception.NoAuthorizationException;
 import com.biblioteca.infrastructure.exception.RecordNotFoundException;
+import com.biblioteca.services.email.Email;
+import com.biblioteca.services.email.EmailService;
+import com.biblioteca.services.resetpassword.TokenResetService;
+import com.biblioteca.services.resetpassword.dto.TokenResetPublicData;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,17 +33,21 @@ public class UserService {
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+    private final TokenResetService tokenResetService;
+    private final EmailService emailService;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        TokenService tokenService,
                        AuthenticationManager authenticationManager,
-                       UserMapper userMapper) {
+                       UserMapper userMapper, TokenResetService tokenResetService, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
+        this.tokenResetService = tokenResetService;
+        this.emailService = emailService;
     }
 
     public Token login(UserLoginDTO data){
@@ -95,12 +101,63 @@ public class UserService {
         throw new NoAuthorizationException("No authorization for this action");
     }
 
+    public void forgotPassword(UserForgotPasswordDTO data) throws Exception {
+        UserDomain userDomain = userRepository.findByEmail(data.email())
+                .orElseThrow(() -> new RecordNotFoundException(data.email()));
+
+        String token = tokenResetService.generateToken(userDomain);
+
+        String subject = "Change Password";
+        String from = "riquelmemontijo@gmail.com";
+        String to = data.email();
+        String content = getTextForEmailResetPassword(userDomain, token);
+
+        var email = new Email(subject, from, to, content);
+
+        emailService.sendMimeMail(email, content);
+    }
+
     public void delete(UUID id){
         var student = userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         userRepository.deleteById(student.getId());
     }
 
-    public boolean validateUserDataUpdate(UUID idUserUpdate){
+    public void forgotPasswordUpdate(String password, String token) throws Exception {
+        tokenResetService.updatePassword(password, token);
+    }
+
+    private String getTextForEmailResetPassword(UserDomain userDomain, String token){
+        return """
+                  <!DOCTYPE html>
+                  <html lang="pt-br">
+                     <head>
+                      <meta charset="UTF-8">
+                      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Email Reset Senha</title>
+                        <style type="text/css">
+                           * { font-family: 'Inter', sans-serif; background-color: #f4f4f5; } -->
+                           body { display: flex; flex-direction: column; }
+                           a { color: #007a12; text-decoration: none;}
+                           .center { text-align: center; }
+                        </style>
+                     </head>
+                     <body>
+                        <div class="center">
+                           <h2>Hello, %s! </h2>
+                           <p>
+                              This is an email to update your password.<br/>
+                              click on the link below to change the password.
+                           </p>
+                           <br/>
+                           <h2><a href="%s">Change Password</a></h2>
+                        </div>
+                     </body>
+                  </html>
+               """.formatted(userDomain.getName().split(" ")[0], "http://localhost/forgot-password/" + token);
+    }
+
+    private boolean validateUserDataUpdate(UUID idUserUpdate){
         var idAuthenticatedUser = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getPrincipal()

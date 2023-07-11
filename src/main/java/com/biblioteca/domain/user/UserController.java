@@ -50,10 +50,21 @@ public class UserController {
         return ResponseEntity.ok(userService.updatePassword(data));
     }
 
+    @PostMapping("/forgot-password")
+    public void forgotPassword(@RequestBody UserForgotPasswordDTO data) throws Exception {
+        userService.forgotPassword(data);
+    }
+
+    @PostMapping("/forgot-password/{token}")
+    public void forgotPasswordUpdate(@PathVariable String token,
+                                     @RequestBody UserForgotPasswordUpdateDTO data) throws Exception {
+        System.out.println(token);
+        userService.forgotPasswordUpdate(data.password(), token);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable UUID id){
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

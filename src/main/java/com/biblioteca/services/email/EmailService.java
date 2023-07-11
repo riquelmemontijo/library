@@ -1,5 +1,8 @@
 package com.biblioteca.services.email;
 
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -37,7 +40,25 @@ public class EmailService {
             email.setStatus(StatusEmail.ERROR);
             emailRepository.save(email);
         }
+    }
 
+    @Transactional
+    public void sendMimeMail(Email email, String content) throws MessagingException {
+        try{
+            mailSender.send(mimeMessage -> {
+                mimeMessage.setSubject(email.getSubject());
+                mimeMessage.setFrom(email.getFrom());
+                mimeMessage.setRecipients(Message.RecipientType.TO, email.getTo());
+                mimeMessage.setContent(content, "text/html; charset=utf-8");
+            });
+            email.setStatus(StatusEmail.SENT);
+            email.setSendDate(LocalDateTime.now());
+            emailRepository.save(email);
+        }catch (MailException mailException){
+            email.setSendDate(LocalDateTime.now());
+            email.setStatus(StatusEmail.ERROR);
+            emailRepository.save(email);
+        }
     }
 
 }
