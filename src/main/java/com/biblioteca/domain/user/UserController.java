@@ -1,6 +1,7 @@
 package com.biblioteca.domain.user;
 
 import com.biblioteca.domain.user.dto.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,26 +27,31 @@ public class UserController {
     }
 
     @PostMapping("/create-user")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity createUser(@RequestBody @Valid UserFormDTO form){
         return ResponseEntity.ok(userService.createUser(form));
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<UserInfoDTO>> getAll(@PageableDefault(size = 20, sort = {"id"}) Pageable pageable){
         return ResponseEntity.ok(userService.getAll(pageable));
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UserInfoDTO> getById(@PathVariable UUID id){
         return ResponseEntity.ok(userService.getById(id));
     }
 
     @PutMapping("/update-data")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity update(@RequestBody UserUpdateDTO data){
         return ResponseEntity.ok(userService.update(data));
     }
 
     @PutMapping("/update-password")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity updatePassword(@RequestBody UserUpdatePasswordDTO data){
         return ResponseEntity.ok(userService.updatePassword(data));
     }
@@ -63,6 +69,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity delete(@PathVariable UUID id){
         userService.delete(id);
         return ResponseEntity.noContent().build();

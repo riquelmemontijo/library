@@ -3,6 +3,7 @@ package com.biblioteca.domain.borrow;
 import com.biblioteca.domain.borrow.dto.BorrowFormDTO;
 import com.biblioteca.domain.borrow.dto.BorrowInfoDTO;
 import com.biblioteca.domain.borrow.dto.BorrowReturnDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/borrow")
+@SecurityRequirement(name = "bearer-key")
 public class BorrowController {
 
     private final BorrowService borrowService;

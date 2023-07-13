@@ -3,6 +3,7 @@ package com.biblioteca.domain.author;
 import com.biblioteca.domain.author.dto.AuthorFormDTO;
 import com.biblioteca.domain.author.dto.AuthorInfoDTO;
 import com.biblioteca.domain.author.dto.AuthorUpdateDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
+@SecurityRequirement(name = "bearer-key")
 public class AuthorController {
 
     private final AuthorService authorService;

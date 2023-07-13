@@ -3,6 +3,7 @@ package com.biblioteca.domain.bookcase;
 import com.biblioteca.domain.bookcase.dto.BookcaseFormDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInfoDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseUpdateDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/bookcase")
+@SecurityRequirement(name = "bearer-key")
 public class BookcaseController {
 
     private final BookcaseService bookcaseService;

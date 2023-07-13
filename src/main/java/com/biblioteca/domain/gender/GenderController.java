@@ -3,6 +3,7 @@ package com.biblioteca.domain.gender;
 import com.biblioteca.domain.gender.dto.GenderFormDTO;
 import com.biblioteca.domain.gender.dto.GenderInfoDTO;
 import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/gender")
+@SecurityRequirement(name = "bearer-key")
 public class GenderController {
 
     private final GenderService genderService;

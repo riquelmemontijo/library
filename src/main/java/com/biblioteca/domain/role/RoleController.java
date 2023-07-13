@@ -1,6 +1,7 @@
 package com.biblioteca.domain.role;
 
 import com.biblioteca.domain.role.dto.RoleInfoDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/role")
+@SecurityRequirement(name = "bearer-key")
 public class RoleController {
 
     private final RoleService roleService;

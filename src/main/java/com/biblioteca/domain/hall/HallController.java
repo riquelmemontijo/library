@@ -3,6 +3,7 @@ package com.biblioteca.domain.hall;
 import com.biblioteca.domain.hall.dto.HallFormDTO;
 import com.biblioteca.domain.hall.dto.HallInfoDTO;
 import com.biblioteca.domain.hall.dto.HallUpdateDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/hall")
+@SecurityRequirement(name = "bearer-key")
 public class HallController {
 
     private final HallService hallService;

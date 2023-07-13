@@ -3,6 +3,7 @@ package com.biblioteca.domain.student;
 import com.biblioteca.domain.student.dto.StudentFormDTO;
 import com.biblioteca.domain.student.dto.StudentInfoDTO;
 import com.biblioteca.domain.student.dto.StudentUpdateDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/student")
+@SecurityRequirement(name = "bearer-key")
 public class StudentController {
 
     private final StudentService studentService;
