@@ -103,7 +103,7 @@ public class UserService {
 
     public void forgotPassword(UserForgotPasswordDTO data) throws Exception {
         UserDomain userDomain = userRepository.findByEmail(data.email())
-                .orElseThrow(() -> new RecordNotFoundException(data.email()));
+                                              .orElseThrow(() -> new RecordNotFoundException(data.email()));
 
         String token = tokenResetService.generateToken(userDomain);
 

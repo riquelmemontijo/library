@@ -3,7 +3,7 @@ package com.biblioteca.domain.book;
 import com.biblioteca.domain.author.Author;
 import com.biblioteca.domain.book.dto.BookUpdateDTO;
 import com.biblioteca.domain.bookcase.Bookcase;
-import com.biblioteca.domain.gender.Gender;
+import com.biblioteca.domain.genre.Genre;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.*;
@@ -26,7 +26,7 @@ public class Book {
     @JoinTable(name = "book_genders",
                joinColumns = @JoinColumn(name = "id_book"),
                inverseJoinColumns = @JoinColumn(name = "id_gender"))
-    private List<Gender> genders;
+    private List<Genre> genres;
 
     @ManyToMany
     @JoinTable(name = "bookcase_books",
@@ -50,14 +50,14 @@ public class Book {
 
     public Book(UUID id,
                 String title,
-                List<Gender> genders,
+                List<Genre> genres,
                 List<Bookcase> bookcases,
                 List<Author> authors,
                 Integer units,
                 Integer availableUnits) {
         this.id = id;
         this.title = title;
-        this.genders = genders;
+        this.genres = genres;
         this.bookcases = bookcases;
         this.authors = authors;
         this.units = units;
@@ -80,12 +80,12 @@ public class Book {
         this.title = title;
     }
 
-    public List<Gender> getGenders() {
-        return genders;
+    public List<Genre> getGenders() {
+        return genres;
     }
 
-    public void setGenders(List<Gender> genders) {
-        this.genders = genders;
+    public void setGenders(List<Genre> genres) {
+        this.genres = genres;
     }
 
     public List<Bookcase> getBookcases() {
@@ -122,9 +122,9 @@ public class Book {
 
     public void update(BookUpdateDTO bookUpdateDTO){
         this.title = bookUpdateDTO.title();
-        this.genders = bookUpdateDTO.genders()
+        this.genres = bookUpdateDTO.genders()
                                     .stream()
-                                    .map(genderDTO -> new Gender(genderDTO.id(), genderDTO.name())).toList();
+                                    .map(genderDTO -> new Genre(genderDTO.id(), genderDTO.name())).toList();
         this.authors = bookUpdateDTO.authors()
                                     .stream()
                                     .map(authorDTO -> new Author(authorDTO.id(), authorDTO.name(), null)).toList();

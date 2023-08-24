@@ -18,8 +18,8 @@ public class SpringDocConfiguration {
                 .addSecuritySchemes("bearer-key",
                 new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
                 .info(new Info()
-                .title("Biblioteca API")
-                .description("API Restful de um sistema de gerenciamento de biblioteca.")
+                .title("Library API")
+                .description("API RESTFul to manage a library")
                 .contact(new Contact()
                 .name("Riquelme Montijo")
                 .email("riquelmemontijo@gmail.com")));

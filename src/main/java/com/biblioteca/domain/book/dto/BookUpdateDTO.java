@@ -2,7 +2,7 @@ package com.biblioteca.domain.book.dto;
 
 import com.biblioteca.domain.author.dto.AuthorInBookDTO;
 import com.biblioteca.domain.bookcase.dto.BookcaseInBookDTO;
-import com.biblioteca.domain.gender.dto.GenderInBookDTO;
+import com.biblioteca.domain.genre.dto.GenreInBookDTO;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ public record BookUpdateDTO(@NotNull(message = "The id is required")
                             String title,
                             @Valid
                             @NotNull(message = "At least one gender is required")
-                            List<GenderInBookDTO> genders,
+                            List<GenreInBookDTO> genders,
                             @Valid
                             List<BookcaseInBookDTO> bookcases,
                             @Valid

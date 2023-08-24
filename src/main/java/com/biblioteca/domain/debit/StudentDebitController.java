@@ -33,8 +33,8 @@ public class StudentDebitController {
     }
 
     @PostMapping
-    public ResponseEntity paidDebit(@RequestBody StudentDebitPaidDTO data){
-        return ResponseEntity.ok(service.paidDebit(data));
+    public ResponseEntity payDebit(@RequestBody StudentDebitPaidDTO data){
+        return ResponseEntity.ok(service.payDebit(data));
     }
 
 }

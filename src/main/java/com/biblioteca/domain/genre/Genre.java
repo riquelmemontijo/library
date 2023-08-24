@@ -1,15 +1,15 @@
-package com.biblioteca.domain.gender;
+package com.biblioteca.domain.genre;
 
 import com.biblioteca.domain.book.Book;
-import com.biblioteca.domain.gender.dto.GenderUpdateDTO;
+import com.biblioteca.domain.genre.dto.GenreUpdateDTO;
 
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "Gender")
-@Table(name = "gender")
-public class Gender {
+@Entity(name = "Genre")
+@Table(name = "genre")
+public class Genre {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -17,13 +17,13 @@ public class Gender {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @ManyToMany(mappedBy = "genders")
+    @ManyToMany(mappedBy = "genres")
     private List<Book> books;
 
-    public Gender() {
+    public Genre() {
     }
 
-    public Gender(UUID id, String name) {
+    public Genre(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -52,7 +52,7 @@ public class Gender {
         this.books = books;
     }
 
-    public void update(GenderUpdateDTO dto){
+    public void update(GenreUpdateDTO dto){
         this.name = dto.name();
     }
 }

@@ -52,7 +52,7 @@ public class StudentDebitService {
         return Period.between(dueDate, returnDate).getDays();
     }
 
-    public StudentDebitInfoDTO paidDebit(StudentDebitPaidDTO data){
+    public StudentDebitInfoDTO payDebit(StudentDebitPaidDTO data){
         var studentDebit = studentDebitRepository.findById(data.id())
                  .orElseThrow(() -> new RecordNotFoundException(data.id()));
         studentDebit.setPaid(true);
