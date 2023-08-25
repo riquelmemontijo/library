@@ -26,6 +26,4 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
               WHERE b IN (:books)
            """)
     void addStock(List<Book> books);
-
-    Optional<Book> findBookByTitle(String title);
 }

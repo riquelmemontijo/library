@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface BorrowRepository extends JpaRepository<Borrow, UUID> {
 
     @Query("""
-              SELECT NEW 
+              SELECT NEW
               com.biblioteca.tasks.dto.NotifyStudentBorrowExpiration(s.name, s.email, b.dueDate)
               FROM Borrow b
               INNER JOIN Student s ON s.id = b.student

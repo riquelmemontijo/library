@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.biblioteca</groupId>
-	<artifactId>library</artifactId>
+	<artifactId>Biblioteca</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Biblioteca</name>
 	<description>Sistema para locação de livros em uma biblioteca.</description>

@@ -12,7 +12,7 @@ Index
 * Requirements
 * Configuration
 * Documentation
-* Tecnologies
+* Technologies
 * Features
 <!--te-->
 
@@ -38,10 +38,11 @@ git clone git@github.com:riquelmemontijo/biblioteca.git
 docker-compose up
 ```
 
-* It's not necessary to create a newdatabase, because application.properties have a property (spring.datasource.url=jdbc:postgresql://localhost:5431/library?createDatabaseIfNotExist=true) that make this.
-Anyway, if you want to make something in the database, run this command:
+* Is necessary to create a new database with name "library". For this, run the commands:
 ```bash
 docker exec -it db_library psql -U admin
+
+create database library;
 ```
 
 * The application have an email service, so it's necessary to configure this part in application.properties.
@@ -50,12 +51,12 @@ In the section "#email configuration" you need to insert the properties of your 
 * I recommend to use Gmail, because it's very simple to get the password for applications. Just read this tutorial:
 https://support.google.com/mail/answer/185833?hl=en
 
-```
+```properties
 #email configuration
-spring.mail.host= [INSERT YOUR HOST HERE]
-spring.mail.port= [INSERT THE PORT HERE]
-spring.mail.username= [INSERT THE USERNAME HERE]
-spring.mail.password= [INSERT THE APP PASSWORD HERE]
+spring.mail.host=[INSERT YOUR HOST HERE]
+spring.mail.port=[INSERT YOUR PORT HERE]
+spring.mail.username=[INSERT YOUR USERNAME HERE]
+spring.mail.password=[INSERT YOUR APP PASSWORD HERE]
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
@@ -98,7 +99,7 @@ public void forgotPassword(UserForgotPasswordDTO data) throws Exception {
 
 In the section "#security configuration", the token secret is "secret", but if you wanna more security for some reason, you can create an environment variable "SECRET_JWT".
 
-```
+```properties
 #security configuration
 api.security.token.secret=${SECRET_JWT:secret}
 ```
@@ -116,9 +117,10 @@ Tecnologies
 * Spring Security
 * Spring Data JPA
 * Spring Mail
+* SpringDoc
 * Docker
 * Apache Maven
-* Postgresql
+* PostgreSQL
 * Flyway
 * JUnit
 * MapStruct

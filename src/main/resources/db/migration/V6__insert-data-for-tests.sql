@@ -1,24 +1,24 @@
--------------------------------------- DATA OF GENDERS ----------------------------------------------
+-------------------------------------- DATA OF GENRES ----------------------------------------------
 
-INSERT INTO GENDER(id, name) VALUES('c2db861f-366b-4793-a7ad-6acd0729e13a', 'Drama');
-INSERT INTO GENDER(id, name) VALUES('e6b30090-c63e-4c92-9f5f-8e0d3883d3e6', 'Fantasia');
-INSERT INTO GENDER(id, name) VALUES('fe2992c4-a2cc-468e-85b1-fc986c7eac6e', 'Romance');
-INSERT INTO GENDER(id, name) VALUES('6e728dd9-1f03-49ef-be91-85af85f0b68d', 'Terror');
-INSERT INTO GENDER(id, name) VALUES('3243eebf-94ad-448f-9060-89ed2ea3b069', 'Comédia');
-INSERT INTO GENDER(id, name) VALUES('fa07dae6-e64d-4aa2-aba5-cfa16ac2260f', 'Suspense');
-INSERT INTO GENDER(id, name) VALUES('d34eaabb-21e1-4d30-a1a1-22e8d12345d9', 'Comédia-Romântica');
-INSERT INTO GENDER(id, name) VALUES('3089df01-1f61-45e1-8e80-0b178215be93', 'Ficção Científica');
-INSERT INTO GENDER(id, name) VALUES('ef0068a6-1166-4ffe-9497-a259d2dca843', 'Biografia');
-INSERT INTO GENDER(id, name) VALUES('02692ec9-d624-4b48-b7f8-4be5ee695bc1', 'Didático');
-INSERT INTO GENDER(id, name) VALUES('154296c9-ad94-4c13-b33a-264dcf2d19ab', 'História');
-INSERT INTO GENDER(id, name) VALUES('8a53c5a3-f2bc-4ce3-81fa-b903af23b096', 'Filosofia');
-INSERT INTO GENDER(id, name) VALUES('60c941b6-a55b-4f9b-88a7-ae6256745244', 'Sociologia');
-INSERT INTO GENDER(id, name) VALUES('7ed5b51f-cbf0-4e85-b9f6-cf037b6597ce', 'Matemática');
-INSERT INTO GENDER(id, name) VALUES('76707d29-04c2-4d4f-9976-6659d53b01e8', 'Português');
-INSERT INTO GENDER(id, name) VALUES('39710937-0339-4c40-94ef-438efd51ef2a', 'Língua Estrangeira');
-INSERT INTO GENDER(id, name) VALUES('56614631-6723-4651-b7ba-0251d9cd348b', 'Infantil');
-INSERT INTO GENDER(id, name) VALUES('9ffde590-e62d-4899-a95b-67242bcd759c', 'Religioso');
-INSERT INTO GENDER(id, name) VALUES('44cb4a17-6526-4d78-bf03-323703dfe9d4', 'Teologia');
+INSERT INTO GENRE(id, name) VALUES('c2db861f-366b-4793-a7ad-6acd0729e13a', 'Drama');
+INSERT INTO GENRE(id, name) VALUES('e6b30090-c63e-4c92-9f5f-8e0d3883d3e6', 'Fantasia');
+INSERT INTO GENRE(id, name) VALUES('fe2992c4-a2cc-468e-85b1-fc986c7eac6e', 'Romance');
+INSERT INTO GENRE(id, name) VALUES('6e728dd9-1f03-49ef-be91-85af85f0b68d', 'Terror');
+INSERT INTO GENRE(id, name) VALUES('3243eebf-94ad-448f-9060-89ed2ea3b069', 'Comédia');
+INSERT INTO GENRE(id, name) VALUES('fa07dae6-e64d-4aa2-aba5-cfa16ac2260f', 'Suspense');
+INSERT INTO GENRE(id, name) VALUES('d34eaabb-21e1-4d30-a1a1-22e8d12345d9', 'Comédia-Romântica');
+INSERT INTO GENRE(id, name) VALUES('3089df01-1f61-45e1-8e80-0b178215be93', 'Ficção Científica');
+INSERT INTO GENRE(id, name) VALUES('ef0068a6-1166-4ffe-9497-a259d2dca843', 'Biografia');
+INSERT INTO GENRE(id, name) VALUES('02692ec9-d624-4b48-b7f8-4be5ee695bc1', 'Didático');
+INSERT INTO GENRE(id, name) VALUES('154296c9-ad94-4c13-b33a-264dcf2d19ab', 'História');
+INSERT INTO GENRE(id, name) VALUES('8a53c5a3-f2bc-4ce3-81fa-b903af23b096', 'Filosofia');
+INSERT INTO GENRE(id, name) VALUES('60c941b6-a55b-4f9b-88a7-ae6256745244', 'Sociologia');
+INSERT INTO GENRE(id, name) VALUES('7ed5b51f-cbf0-4e85-b9f6-cf037b6597ce', 'Matemática');
+INSERT INTO GENRE(id, name) VALUES('76707d29-04c2-4d4f-9976-6659d53b01e8', 'Português');
+INSERT INTO GENRE(id, name) VALUES('39710937-0339-4c40-94ef-438efd51ef2a', 'Língua Estrangeira');
+INSERT INTO GENRE(id, name) VALUES('56614631-6723-4651-b7ba-0251d9cd348b', 'Infantil');
+INSERT INTO GENRE(id, name) VALUES('9ffde590-e62d-4899-a95b-67242bcd759c', 'Religioso');
+INSERT INTO GENRE(id, name) VALUES('44cb4a17-6526-4d78-bf03-323703dfe9d4', 'Teologia');
 
 --------------------------------------- DATA OF AUTHORS ---------------------------------------------
 
@@ -73,21 +73,21 @@ INSERT INTO BOOKCASE(id, alias, fk_hall) VALUES('b2ea762d-e81f-4a92-8822-ba56920
 --------------------------------------- DATA OF BOOK --------------------------------------------
 -- SILMARILLION
 INSERT INTO BOOK(id, title, units, available_units) VALUES('5ec2a2ef-363c-4d97-91b9-4ff3aec796ab', 'Silmarillion', 10, 10);
-INSERT INTO BOOK_GENDERS(id_book, id_gender) VALUES('5ec2a2ef-363c-4d97-91b9-4ff3aec796ab', 'e6b30090-c63e-4c92-9f5f-8e0d3883d3e6');
+INSERT INTO BOOK_GENRES(id_book, id_genre) VALUES('5ec2a2ef-363c-4d97-91b9-4ff3aec796ab', 'e6b30090-c63e-4c92-9f5f-8e0d3883d3e6');
 INSERT INTO BOOKCASE_BOOKS(id_book, id_bookcase) VALUES('5ec2a2ef-363c-4d97-91b9-4ff3aec796ab','b41e7cf2-08e3-445d-9572-afd3112c0f7b');
 INSERT INTO AUTHOR_BOOKS(id_book, id_author) VALUES('5ec2a2ef-363c-4d97-91b9-4ff3aec796ab','3c3f1f46-4f1f-49d9-984c-d61ad1d6e074');
 
 -- O SABER DOS ANTIGOS
 INSERT INTO BOOK(id, title, units, available_units) VALUES('d3a93493-e561-42a6-81b2-412cec083258', 'O Saber dos Antigos', 7, 7);
-INSERT INTO BOOK_GENDERS(id_book, id_gender) VALUES('d3a93493-e561-42a6-81b2-412cec083258', '8a53c5a3-f2bc-4ce3-81fa-b903af23b096');
+INSERT INTO BOOK_GENRES(id_book, id_genre) VALUES('d3a93493-e561-42a6-81b2-412cec083258', '8a53c5a3-f2bc-4ce3-81fa-b903af23b096');
 INSERT INTO BOOKCASE_BOOKS(id_book, id_bookcase) VALUES('d3a93493-e561-42a6-81b2-412cec083258','f9a20762-6d20-4471-946b-90a26ca0b30a');
 INSERT INTO AUTHOR_BOOKS(id_book, id_author) VALUES('d3a93493-e561-42a6-81b2-412cec083258','6531bf12-da59-4914-bc9c-43129222b279');
 
 -- SUMA TEOLÓGICA
 INSERT INTO BOOK(id, title, units, available_units) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f', 'Suma Teológica I', 14, 14);
-INSERT INTO BOOK_GENDERS(id_book, id_gender) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','44cb4a17-6526-4d78-bf03-323703dfe9d4');
-INSERT INTO BOOK_GENDERS(id_book, id_gender) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','9ffde590-e62d-4899-a95b-67242bcd759c');
-INSERT INTO BOOK_GENDERS(id_book, id_gender) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','8a53c5a3-f2bc-4ce3-81fa-b903af23b096');
+INSERT INTO BOOK_GENRES(id_book, id_genre) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','44cb4a17-6526-4d78-bf03-323703dfe9d4');
+INSERT INTO BOOK_GENRES(id_book, id_genre) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','9ffde590-e62d-4899-a95b-67242bcd759c');
+INSERT INTO BOOK_GENRES(id_book, id_genre) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','8a53c5a3-f2bc-4ce3-81fa-b903af23b096');
 INSERT INTO BOOKCASE_BOOKS(id_book, id_bookcase) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f', '96b19ccc-0d09-4cdb-9b30-2cacb3a94726');
 INSERT INTO AUTHOR_BOOKS(id_book, id_author) VALUES('0cd9bfb7-70ce-49ee-9fa6-7dfbbb8c990f','a3e0d5b0-908b-45a4-93bf-111a7279466a');
 

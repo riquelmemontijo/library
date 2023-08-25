@@ -9,7 +9,6 @@ import com.biblioteca.infrastructure.exception.RecordNotFoundException;
 import com.biblioteca.services.email.Email;
 import com.biblioteca.services.email.EmailService;
 import com.biblioteca.services.resetpassword.TokenResetService;
-import com.biblioteca.services.resetpassword.dto.TokenResetPublicData;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
