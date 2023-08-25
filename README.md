@@ -30,13 +30,15 @@ Configuration
 =================
 * First, clone the repository in your machine.
 ```bash
-git clone git@github.com:riquelmemontijo/biblioteca.git
+git clone git@github.com:riquelmemontijo/library.git
 ```
+<hr>
 
 * After that, in the path of the project, start the postgre's container with docker-compose:
 ```bash
 docker-compose up
 ```
+<hr>
 
 * Is necessary to create a new database with name "library". For this, run the commands:
 ```bash
@@ -44,6 +46,8 @@ docker exec -it db_library psql -U admin
 
 create database library;
 ```
+
+<hr>
 
 * The application have an email service, so it's necessary to configure this part in application.properties.
 In the section "#email configuration" you need to insert the properties of your email.
@@ -97,17 +101,35 @@ public void forgotPassword(UserForgotPasswordDTO data) throws Exception {
 }
 ```
 
-In the section "#security configuration", the token secret is "secret", but if you wanna more security for some reason, you can create an environment variable "SECRET_JWT".
+<hr>
+
+* In the section "#security configuration", the token secret is "secret", but if you wanna more security for some reason, you can create an environment variable "SECRET_JWT".
 
 ```properties
 #security configuration
 api.security.token.secret=${SECRET_JWT:secret}
 ```
 
+<hr>
+
+* The V10 file of Flyway, I insert a user default to sign in on the app. In an HTTP request of POST type, for the url http://localhost:8080/user/login send this body:
+```json
+{
+  "username":"master.master",
+  "password":"masterpassword"
+}
+```
+
+The response will be the token and the role of the user.
+
+<hr>
+
 Documentation
 =================
 
 To access the documentation, just paste this url in your browser: http://localhost:8080/swagger-ui/index.html
+
+<hr>
 
 Tecnologies
 =================
@@ -125,6 +147,8 @@ Tecnologies
 * JUnit
 * MapStruct
 * Bean Validation
+
+<hr>
 
 Features
 =================
