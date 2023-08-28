@@ -40,7 +40,7 @@ docker-compose up
 ```
 <hr>
 
-* Is necessary to create a new database with name "library". For this, run the commands:
+* It's necessary to create a new database with name "library". For this, run the commands:
 ```bash
 docker exec -it db_library psql -U admin
 
@@ -49,7 +49,7 @@ create database library;
 
 <hr>
 
-* The application have an email service, so it's necessary to configure this part in application.properties.
+* The application has an email service, so it's necessary to configure this part in application.properties.
 In the section "#email configuration" you need to insert the properties of your email.
 
 * I recommend to use Gmail, because it's very simple to get the password for applications. Just read this tutorial:
@@ -65,7 +65,7 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
-In the classes SendMailToNotifyBorrowExpiration and UserService you need to set the email that call the email service.
+In the classes SendMailToNotifyBorrowExpiration and UserService you need to set the email that calls the email service.
 
 In SendMailToNotifyBorrowExpiration
 ```java
@@ -103,7 +103,7 @@ public void forgotPassword(UserForgotPasswordDTO data) throws Exception {
 
 <hr>
 
-* In the section "#security configuration", the token secret is "secret", but if you wanna more security for some reason, you can create an environment variable "SECRET_JWT".
+* In the section "#security configuration", the token secret is "secret", but if you want more security for some reason, you can create an environment variable "SECRET_JWT".
 
 ```properties
 #security configuration
@@ -112,7 +112,7 @@ api.security.token.secret=${SECRET_JWT:secret}
 
 <hr>
 
-* The V10 file of Flyway, I insert a user default to sign in on the app. In an HTTP request of POST type, for the url http://localhost:8080/user/login send this body:
+* The V10 file of Flyway, I inserted a default user to sign in on the app. In an HTTP request of POST type, for the url http://localhost:8080/user/login send this body:
 ```json
 {
   "username":"master.master",
@@ -127,7 +127,7 @@ The response will be the token and the role of the user.
 Documentation
 =================
 
-To access the documentation, just paste this url in your browser: http://localhost:8080/swagger-ui/index.html
+To access the documentation, just paste this url in your browser while the app is running in your machine: http://localhost:8080/swagger-ui/index.html
 
 <hr>
 
@@ -166,8 +166,8 @@ Features
 
 * Business flow
 
-- [x] Borrow of books to students
-- [x] Debit generation if there is a delay in returning books
+- [x] Lending of books to students
+- [x] Debit generation if there is a delay in the returning of books
 - [x] Payment of debits
 
 * Tasks
