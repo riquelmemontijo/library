@@ -12,9 +12,6 @@ public class ValidateIfBookHaveUnitsAvailable implements ValidateBorrow{
             if(book.getAvailableUnits() <= 0){
                 throw new BusinessRulesException("The book %s don't have available units".formatted(book.getTitle()));
             }
-            else{
-                System.out.println("Sou trouxa");
-            }
         });
     }
 }
