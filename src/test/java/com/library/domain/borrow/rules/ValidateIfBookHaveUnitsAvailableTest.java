@@ -13,27 +13,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidateIfBookHaveUnitsAvailableTest {
 
+    private final Book book;
+    private final ValidateIfBookHaveUnitsAvailable validator;
+    private final Borrow borrow;
+
+    public ValidateIfBookHaveUnitsAvailableTest() {
+        this.book = new Book();
+        this.validator = new ValidateIfBookHaveUnitsAvailable();
+        this.borrow = new Borrow();
+    }
+
     @Test
     @DisplayName("Should throw exception when book don't have available units")
     void throwExceptionIfBookDontHaveUnitsAvailable(){
-        ValidateIfBookHaveUnitsAvailable rule = new ValidateIfBookHaveUnitsAvailable();
-        var book = new Book();
         book.setAvailableUnits(0);
-        var borrow = new Borrow();
         borrow.setBooks(List.of(book));
-
-        assertThrows(BusinessRulesException.class, () -> rule.validate(borrow));
+        assertThrows(BusinessRulesException.class, () -> validator.validate(borrow));
     }
 
     @Test
     @DisplayName("Shouldn't throw exception when book have available units")
     void dontThrowExceptionIfBookHaveUnitsAvailable(){
-        ValidateIfBookHaveUnitsAvailable rule = new ValidateIfBookHaveUnitsAvailable();
-        var book = new Book();
         book.setAvailableUnits(1);
-        var borrow = new Borrow();
         borrow.setBooks(List.of(book));
-
-        assertDoesNotThrow(() -> rule.validate(borrow));
+        assertDoesNotThrow(() -> validator.validate(borrow));
     }
 }

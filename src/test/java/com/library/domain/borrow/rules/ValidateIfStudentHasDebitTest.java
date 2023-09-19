@@ -14,38 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidateIfStudentHasDebitTest {
 
+    private final ValidateIfStudentHasDebit validator;
+    private final Student student;
+    private final StudentDebit studentDebit;
+    private final Borrow borrow;
+
+    public ValidateIfStudentHasDebitTest() {
+        validator = new ValidateIfStudentHasDebit();
+        student = new Student();
+        studentDebit = new StudentDebit();
+        borrow = new Borrow();
+    }
+
     @Test
     @DisplayName("Should throw exception when student has not paid debits")
     void throwExceptionIfStudentHasDebits(){
-        ValidateIfStudentHasDebit rule = new ValidateIfStudentHasDebit();
-
-        var studentDebit = new StudentDebit();
         studentDebit.setPaid(false);
-
-        var student = new Student();
         student.setDebits(List.of(studentDebit));
-
-        var borrow = new Borrow();
         borrow.setStudent(student);
 
-        assertThrows(BusinessRulesException.class, () -> rule.validate(borrow));
+        assertThrows(BusinessRulesException.class, () -> validator.validate(borrow));
     }
 
     @Test
     @DisplayName("Shouldn't throw exception when student doesn't have not paid debits")
     void dontThrowExceptionIfStudentDoesNotHaveDebits(){
-        var rule = new ValidateIfStudentHasDebit();
-
-        var studentDebit = new StudentDebit();
         studentDebit.setPaid(true);
-
-        var student = new Student();
         student.setDebits(List.of(studentDebit));
-
-        var borrow = new Borrow();
         borrow.setStudent(student);
 
-        assertDoesNotThrow(() -> rule.validate(borrow));
+        assertDoesNotThrow(() -> validator.validate(borrow));
     }
 
 }
