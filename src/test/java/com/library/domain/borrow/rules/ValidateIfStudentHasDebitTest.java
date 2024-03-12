@@ -4,10 +4,7 @@ import com.library.domain.borrow.Borrow;
 import com.library.domain.debit.StudentDebit;
 import com.library.domain.student.Student;
 import com.library.infrastructure.exception.BusinessRulesException;
-<<<<<<< HEAD
 import org.junit.jupiter.api.DisplayName;
-=======
->>>>>>> d14e74e (Testes de regras de negócio durante empréstimo finalizadas)
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,44 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidateIfStudentHasDebitTest {
 
-    @Test
-<<<<<<< HEAD
-    @DisplayName("Should throw exception when student has not paid debits")
-=======
->>>>>>> d14e74e (Testes de regras de negócio durante empréstimo finalizadas)
-    void throwExceptionIfStudentHasDebits(){
-        ValidateIfStudentHasDebit rule = new ValidateIfStudentHasDebit();
+    private final ValidateIfStudentHasDebit validator;
+    private final Student student;
+    private final StudentDebit studentDebit;
+    private final Borrow borrow;
 
-        var studentDebit = new StudentDebit();
-        studentDebit.setPaid(false);
-
-        var student = new Student();
-        student.setDebits(List.of(studentDebit));
-
-        var borrow = new Borrow();
-        borrow.setStudent(student);
-
-        assertThrows(BusinessRulesException.class, () -> rule.validate(borrow));
+    public ValidateIfStudentHasDebitTest() {
+        validator = new ValidateIfStudentHasDebit();
+        student = new Student();
+        studentDebit = new StudentDebit();
+        borrow = new Borrow();
     }
 
     @Test
-<<<<<<< HEAD
-    @DisplayName("Shouldn't throw exception when student doesn't have not paid debits")
-=======
->>>>>>> d14e74e (Testes de regras de negócio durante empréstimo finalizadas)
-    void dontThrowExceptionIfStudentDoesNotHaveDebits(){
-        var rule = new ValidateIfStudentHasDebit();
-
-        var studentDebit = new StudentDebit();
-        studentDebit.setPaid(true);
-
-        var student = new Student();
+    @DisplayName("Should throw exception when student has not paid debits")
+    void throwExceptionIfStudentHasDebits(){
+        studentDebit.setPaid(false);
         student.setDebits(List.of(studentDebit));
-
-        var borrow = new Borrow();
         borrow.setStudent(student);
 
-        assertDoesNotThrow(() -> rule.validate(borrow));
+        assertThrows(BusinessRulesException.class, () -> validator.validate(borrow));
+    }
+
+    @Test
+    @DisplayName("Shouldn't throw exception when student doesn't have not paid debits")
+    void dontThrowExceptionIfStudentDoesNotHaveDebits(){
+        studentDebit.setPaid(true);
+        student.setDebits(List.of(studentDebit));
+        borrow.setStudent(student);
+
+        assertDoesNotThrow(() -> validator.validate(borrow));
     }
 
 }
