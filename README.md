@@ -36,15 +36,7 @@ git clone git@github.com:riquelmemontijo/library.git
 
 * After that, in the path of the project, start the postgre's container with docker-compose:
 ```bash
-docker-compose up
-```
-<hr>
-
-* It's necessary to create a new database with name "library". For this, run the commands:
-```bash
-docker exec -it db_library psql -U admin
-
-create database library;
+docker-compose up -d
 ```
 
 <hr>
